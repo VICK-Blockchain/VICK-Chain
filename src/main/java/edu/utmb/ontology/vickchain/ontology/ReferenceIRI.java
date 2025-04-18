@@ -10,4 +10,9 @@ package edu.utmb.ontology.vickchain.ontology;
  */
 public class ReferenceIRI {
     public static final String GENESIS = "000000";
+    
+    //family name
+    
+    public static final String FAMILY_NAME ="http://purl.obolibrary.org/obo/IAO_0020017";
+    public static final String GIVEN_NAME ="http://purl.obolibrary.org/obo/IAO_0020016";
 }
