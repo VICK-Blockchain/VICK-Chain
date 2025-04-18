@@ -8,6 +8,6 @@ package edu.utmb.ontology.vickchain.ontology;
  *
  * @author mac
  */
-public class ReferenceIRI {
-    public static final String GENESIS = "000000";
+public class ReferenceIRIVaccine {
+    
 }
