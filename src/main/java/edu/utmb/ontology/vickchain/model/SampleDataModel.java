@@ -4,6 +4,7 @@
  */
 package edu.utmb.ontology.vickchain.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -22,7 +23,7 @@ public class SampleDataModel {
     public Set<String> vaccines;
     
     public SampleDataModel(){
-        
+        vaccines = new HashSet<String>();
     }
     
 }
