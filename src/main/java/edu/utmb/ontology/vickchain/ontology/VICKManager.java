@@ -9,11 +9,18 @@ import edu.utmb.ontology.vickchain.iri.ReferenceIRIProperty;
 import edu.utmb.ontology.vickchain.model.SampleDataModel;
 import edu.utmb.ontology.vickchain.util.IDCounter;
 import edu.utmb.ontology.vickchain.util.ImportData;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.riot.Lang;
 import org.apache.jena.vocabulary.RDF;
 import org.apache.jena.vocabulary.RDFS;
 
@@ -75,8 +82,6 @@ public class VICKManager {
 
             String patient_ln = sample.last_name;
 
-            //System.out.println(NAME_SPACE + patient_id);
-            //System.out.println(RDF.type);
             
             //create vaccination patient node with type
             Resource patient_node = nt_model_export.createResource(NAME_SPACE +patient_id);
@@ -99,7 +104,13 @@ public class VICKManager {
             
             
             nt_model_export.write(System.out, "NT");
-             
+            
+            try 
+            {
+                nt_model_export.write(new FileWriter( sample.id+".nt" ), "NT");
+            } catch (IOException ex) {
+                Logger.getLogger(VICKManager.class.getName()).log(Level.SEVERE, null, ex);
+            }
             System.out.println("---------------------\n");
              
             
