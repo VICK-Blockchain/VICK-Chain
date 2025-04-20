@@ -9,9 +9,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -37,13 +37,14 @@ public class ImportData {
         
     }
     
-    public void readExcelSheet(String filePath){
+    public void readExcelSheet(String filePath, ArrayList<SampleDataModel> records){
         
         //header_row.clear();
-       
+        InputStream resourceAsStream = ImportData.class.getClassLoader().getResourceAsStream(filePath);
+        
         try {
-            FileInputStream excel_file = new FileInputStream(new File(filePath));
-            Workbook workbook = new XSSFWorkbook(excel_file);
+            //FileInputStream excel_file = new FileInputStream(new File(filePath));
+            Workbook workbook = new XSSFWorkbook(resourceAsStream);
 
             Sheet sheet = workbook.getSheetAt(0);
             int row_num = 0;
@@ -69,54 +70,103 @@ public class ImportData {
                 }
                 else{
                     
+                    SampleDataModel sample_data = new SampleDataModel();
+                            
+                    
                     for(Cell cell: row){
                         
                         if(cell.getCellType() != CellType.BLANK){
                             
                             String information_type = header_row.get(cell.getColumnIndex());
                             
-                            SampleDataModel sample_data = new SampleDataModel();
                             
                             if(information_type.equalsIgnoreCase("ID")){
-                                sample_data.id = Integer.valueOf(cell.getStringCellValue());
+                                sample_data.id = Integer.valueOf(getValueAsString(cell));
                             }
                             else if(information_type.equalsIgnoreCase("FIRST NAME")){
-                                sample_data.first_name = cell.getStringCellValue();
+                                sample_data.first_name = getValueAsString(cell);
                             }
                             else if(information_type.equalsIgnoreCase("LAST NAME")){
-                                sample_data.last_name = cell.getStringCellValue();
+                                sample_data.last_name = getValueAsString(cell);
                             }
                             else if(information_type.equalsIgnoreCase("POSTAL ADDRESS")){
-                                sample_data.postal_address = cell.getStringCellValue();
+                                sample_data.postal_address = getValueAsString(cell);
                             }
                             else if(information_type.equalsIgnoreCase("POSTAL CODE")){
-                                sample_data.postal_code = cell.getStringCellValue();
+                                sample_data.postal_code = getValueAsString(cell);
                             }
                             else if(information_type.equalsIgnoreCase("EMAIL")){
-                                sample_data.email = cell.getStringCellValue();
+                                sample_data.email = getValueAsString(cell);
                             }
                             else if(information_type.equalsIgnoreCase("BIOLOGICAL SEX")){
-                                sample_data.biological_sex = cell.getStringCellValue();
+                                sample_data.biological_sex = getValueAsString(cell);
                             }
                             else if(information_type.equalsIgnoreCase("VACCINE")){
                                 //sample_data.vaccines = cell.getStringCellValue();
-                                sample_data.vaccines.add(cell.getStringCellValue());
+                                sample_data.vaccines.add(getValueAsString(cell));
                             }
+                            
+                            
                         }
                         
                     }
+                    
+                    records.add(sample_data);
                     
                 }
                 
                 
             }
             
-            excel_file.close();
+            resourceAsStream.close();
         } catch (FileNotFoundException ex) {
             Logger.getLogger(ImportData.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(ImportData.class.getName()).log(Level.SEVERE, null, ex);
         } 
+        
+    }
+    
+    private String getValueAsString(Cell cell){
+        
+        if(CellType.NUMERIC == cell.getCellType()){
+            
+            int value = (int)cell.getNumericCellValue();
+            
+            String valueOf = String.valueOf(value);
+            
+            return valueOf;
+            
+        }
+        
+        else if(CellType.STRING == cell.getCellType()){
+            
+            String stringCellValue = cell.getStringCellValue();
+            
+            return stringCellValue;
+            
+        }
+        
+        
+        return null;
+    }
+    
+    public static void main(String[] args) {
+        
+        
+        ArrayList<SampleDataModel> records = new ArrayList<SampleDataModel>();
+        
+        ImportData importerTest = new ImportData();
+        
+        importerTest.readExcelSheet("sample.xlsx", records);
+        
+        System.out.println(records.size());
+        
+        for(SampleDataModel sample: records){
+            
+            System.out.println(sample.toString());
+            
+        }
         
     }
     
