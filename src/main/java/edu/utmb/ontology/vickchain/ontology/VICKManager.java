@@ -32,7 +32,7 @@ public class VICKManager {
 
     public static final String NAME_SPACE = "http://purl.org/utmb/vick-lite.ttl#";
     
-    public static String temp_url = "http://purl.org/vick-lite";
+    public static String temp_url = "http://purl.org/utmb/vick-lite.ttl";
 
     private static VICKManager INSTANCE = null;
 

@@ -4,10 +4,18 @@
  */
 package edu.utmb.ontology.vickchain.ontology;
 
+import org.apache.jena.rdf.model.Resource;
+
 /**
  *
- * @author mac
+ * @author tuan
  */
-public class VICKEncoder  {
+public interface VICKEncoder  {
+    
+    public void saveDataAsNT();
+    public void encodePatientResource();
+    public void encodePatientFamilyName();
+    public void encodePatientGivenName();
+    public void encodeLinkBetweenPatientAndNames(Resource patient, Resource given_name, Resource family_name);
     
 }
