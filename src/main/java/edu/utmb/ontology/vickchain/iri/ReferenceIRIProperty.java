@@ -11,4 +11,5 @@ package edu.utmb.ontology.vickchain.iri;
 public class ReferenceIRIProperty {
     
     public static final String HAS_SPECIFIED_INPUT ="http://purl.obolibrary.org/obo/OBI_0000293";
+    public static final String DENOTED_BY ="http://purl.obolibrary.org/obo/IAO_0000235";
 }

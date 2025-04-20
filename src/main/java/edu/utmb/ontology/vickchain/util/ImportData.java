@@ -29,11 +29,23 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  */
 public class ImportData {
     
+    private static ImportData INSTANCE = null;
+    
     private Map<Integer, String> header_row = null;
     
-    public ImportData(){
+    private ImportData(){
         
         header_row = new HashMap<Integer, String>();
+        
+    }
+    
+    public static ImportData getInstance(){
+        
+        if(INSTANCE == null){
+            INSTANCE = new ImportData();
+        }
+        
+        return INSTANCE;
         
     }
     
@@ -151,9 +163,17 @@ public class ImportData {
         return null;
     }
     
+    public ArrayList<SampleDataModel> getSampleData(){
+                ArrayList<SampleDataModel> records = new ArrayList<SampleDataModel>();
+
+                readExcelSheet("sample.xlsx", records);
+                
+                return records;
+    }
+    
     public static void main(String[] args) {
         
-        
+        /*
         ArrayList<SampleDataModel> records = new ArrayList<SampleDataModel>();
         
         ImportData importerTest = new ImportData();
@@ -167,7 +187,7 @@ public class ImportData {
             System.out.println(sample.toString());
             
         }
-        
+        */
     }
     
 }

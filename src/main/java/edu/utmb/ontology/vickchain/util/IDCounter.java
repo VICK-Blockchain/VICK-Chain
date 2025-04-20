@@ -12,13 +12,25 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class IDCounter {
     
+    private static IDCounter INSTANCE = null;
+    
     private final AtomicInteger id_counter = new AtomicInteger(0);
     
     private final String PREFIX = "VICK_";
     
     private String latest_identifier = "";
     
-    public IDCounter(){
+    private IDCounter(){
+        
+    }
+    
+    public static IDCounter getInstance(){
+        
+        if(INSTANCE == null){
+            INSTANCE = new IDCounter();
+        }
+        
+        return INSTANCE;
         
     }
     
@@ -27,7 +39,7 @@ public class IDCounter {
     }
     
     public String getIdentifierCounter(){
-        String identifier = String.format("%07d", id_counter);
+        String identifier = String.format("%07d", id_counter.get());
         
         return PREFIX + identifier;
         
@@ -37,7 +49,7 @@ public class IDCounter {
         
         this.incrementCounter();
         
-        latest_identifier = this.getLatestIdentifier();
+        latest_identifier = this.getIdentifierCounter();
         
         return latest_identifier;
         

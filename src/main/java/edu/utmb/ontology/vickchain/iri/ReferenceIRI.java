@@ -9,6 +9,10 @@ package edu.utmb.ontology.vickchain.iri;
  * @author mac
  */
 public class ReferenceIRI {
+    
+    
+    
+    
     public static final String GENESIS = "000000";
     
     //family name
@@ -25,4 +29,6 @@ public class ReferenceIRI {
     public static final String FEMALE_SEX="http://purl.obolibrary.org/obo/PATO_0000383";
     
     public static final String MALE_SEX="http://purl.obolibrary.org/obo/PATO_0000384";
+    
+    public static final String VACCINE_PATIENT="http://purl.obolibrary.org/obo/VICO_0000016";
 }
