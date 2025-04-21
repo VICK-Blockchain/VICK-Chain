@@ -4,6 +4,8 @@
  */
 package edu.utmb.ontology.vickchain.ontology;
 
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.Resource;
 
 /**
@@ -12,10 +14,11 @@ import org.apache.jena.rdf.model.Resource;
  */
 public interface VICKEncoder  {
     
-    public void saveDataAsNT();
-    public void encodePatientResource();
-    public void encodePatientFamilyName();
-    public void encodePatientGivenName();
-    public void encodeLinkBetweenPatientAndNames(Resource patient, Resource given_name, Resource family_name);
+    public void saveDataAsNT(Model exportModel, String file_name);
+    public Resource encodePatientResource(Model exportModel);
+    public Resource encodePatientFamilyName(Model exportModel, String label);
+    public Resource encodePatientGivenName(Model exportModel, String label);
+    public void encodeLinkBetweenPatientAndNames(Property denoted_by, Resource patient, Resource given_name, Resource family_name);
+    public void encodePatientVaccineResource();
     
 }

@@ -4,33 +4,22 @@
  */
 package edu.utmb.ontology.vickchain.ontology;
 
-import edu.utmb.ontology.vickchain.iri.ReferenceIRI;
 import edu.utmb.ontology.vickchain.iri.ReferenceIRIProperty;
 import edu.utmb.ontology.vickchain.model.SampleDataModel;
 import edu.utmb.ontology.vickchain.util.IDCounter;
 import edu.utmb.ontology.vickchain.util.ImportData;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.Resource;
-import org.apache.jena.riot.Lang;
-import org.apache.jena.vocabulary.RDF;
-import org.apache.jena.vocabulary.RDFS;
 
 /**
  *
  * @author mac
  */
-public class VICKManager {
+public class VICKManager extends VICKEncoderImpl{
 
-    public static final String NAME_SPACE = "http://purl.org/utmb/vick-lite.ttl#";
+    public static final String NAME_SPACE = "http://purl.org/utmb/vick-lite.ttl/";
     
     public static String temp_url = "http://purl.org/utmb/vick-lite.ttl";
 
@@ -84,33 +73,31 @@ public class VICKManager {
 
             
             //create vaccination patient node with type
-            Resource patient_node = nt_model_export.createResource(NAME_SPACE +patient_id);
-            Resource patient_type = model.getResource(ReferenceIRI.VACCINE_PATIENT);
-            patient_node.addProperty(RDF.type, patient_type);
+            //Resource patient_node = nt_model_export.createResource(NAME_SPACE +patient_id);
+            //Resource patient_type = model.getResource(ReferenceIRI.VACCINE_PATIENT);
+            //patient_node.addProperty(RDF.type, patient_type);
+            Resource patient_node = this.encodePatientResource(nt_model_export);
             
             //create family name node with type
-            Resource family_name_node = nt_model_export.createResource(NAME_SPACE + id_counter.getLatestIdentifier());
-            Resource f_n_type = nt_model_export.createResource(ReferenceIRI.FAMILY_NAME);
-            family_name_node.addProperty(RDF.type, f_n_type);
+            Resource family_name_node = this.encodePatientFamilyName(nt_model_export, patient_ln);
+            
+            //Resource family_name_node = nt_model_export.createResource(NAME_SPACE + id_counter.getLatestIdentifier());
+            //Resource f_n_type = nt_model_export.createResource(ReferenceIRI.FAMILY_NAME);
+            //family_name_node.addProperty(RDF.type, f_n_type);
+            Resource given_name_node = this.encodePatientGivenName(nt_model_export, patient_fn);
             
             //link vaccination patient node with family name node using dentoed by
-            Property denoted_by = model.getProperty(ReferenceIRIProperty.DENOTED_BY);
-            patient_node.addProperty(denoted_by, family_name_node);
+            
+            this.encodeLinkBetweenPatientAndNames(model.getProperty(ReferenceIRIProperty.DENOTED_BY), patient_node, given_name_node, family_name_node);
+            
+            //Property denoted_by = model.getProperty(ReferenceIRIProperty.DENOTED_BY);
+            //patient_node.addProperty(denoted_by, family_name_node);
             
             
             //link patient family name with family name node
-            family_name_node.addLiteral(RDFS.label, patient_ln);
-            
-            
-            
-            nt_model_export.write(System.out, "NT");
-            
-            try 
-            {
-                nt_model_export.write(new FileWriter( sample.id+".nt" ), "NT");
-            } catch (IOException ex) {
-                Logger.getLogger(VICKManager.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            //family_name_node.addLiteral(RDFS.label, patient_ln);
+            //nt_model_export.write(new FileWriter( sample.id+".nt" ), "NT");
+            this.saveDataAsNT(nt_model_export, sample.id+"");
             System.out.println("---------------------\n");
              
             
@@ -128,5 +115,7 @@ public class VICKManager {
 
         vm.createNTExport();
     }
+
+   
 
 }
