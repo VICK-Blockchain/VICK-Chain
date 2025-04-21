@@ -70,8 +70,6 @@ public class VICKManager extends VICKEncoderImpl{
             
             nt_model_export = ModelFactory.createDefaultModel();
 
-            String patient_id = id_counter.getLatestIdentifier();
-
             String patient_fn = sample.first_name;
 
             String patient_ln = sample.last_name;
@@ -83,7 +81,6 @@ public class VICKManager extends VICKEncoderImpl{
             
             //create family and given name node with type and labels
             Resource family_name_node = this.encodePatientFamilyName(nt_model_export, patient_ln);
-            
             
             Resource given_name_node = this.encodePatientGivenName(nt_model_export, patient_fn);
             
