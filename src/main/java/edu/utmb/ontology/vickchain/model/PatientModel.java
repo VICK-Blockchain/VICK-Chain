@@ -17,6 +17,10 @@ import org.apache.jena.iri.IRI;
  */
 public class PatientModel {
 
+    public void setEthnicity(PatientEthnicity ethnicity) {
+        this.ethnicity = ethnicity;
+    }
+
     public void setFirst_name(String first_name) {
         this.first_name = first_name;
     }
@@ -126,15 +130,49 @@ public class PatientModel {
     }
     
     public enum PatientEthnicity{
-        Hispanic_or_Latino,
-        Not_Hispanic_or_Latino
+        Hispanic_or_Latino("Hispanic or Latino"),
+        Not_Hispanic_or_Latino("Not Hispanic or Latino");
+        
+        private String valueString;
+        
+        public String getStringValue(){
+            return valueString;
+        }
+        
+        PatientEthnicity(String value){
+            valueString = value;
+        }
+        
+        public String getIRI(){
+            
+            if(valueString.equalsIgnoreCase("Hispanic or Latino")){
+                return ReferenceIRI.EthnicityIRI.HISPANIC;
+            }
+            
+            return ReferenceIRI.EthnicityIRI.NON_HISPANIC;
+        }
     }
     
     public enum PatientLanguage{
-        English,
-        Spanish,
-        Other,
-        Unknown
+        English ("English"),
+        Spanish ("Spanish"),
+        Other ("Other"),
+        Unknown ("Unknown");
+        
+        private String valueString;
+        
+        PatientLanguage(String value){
+            valueString = value;
+        }
+        
+        public String getIRI(){
+            
+            if(valueString.equalsIgnoreCase("English")){
+                return ReferenceIRI.LanguageIRI.ENGLISH;
+            }
+            
+            return ReferenceIRI.LanguageIRI.UNKNOWN;
+        }
     }
     
     public void setGender(PatientGender gender_value){

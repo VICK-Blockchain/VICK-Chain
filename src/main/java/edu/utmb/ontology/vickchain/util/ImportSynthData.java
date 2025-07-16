@@ -4,15 +4,20 @@
  */
 package edu.utmb.ontology.vickchain.util;
 
+import edu.utmb.ontology.vickchain.model.PatientModel.PatientEthnicity;
 import edu.utmb.ontology.vickchain.model.PatientModel.PatientGender;
+import edu.utmb.ontology.vickchain.model.PatientModel.PatientLanguage;
+import edu.utmb.ontology.vickchain.model.PatientModel.PatientRace;
 import edu.utmb.ontology.vickchain.model.SynthDataModel;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.poi.ss.usermodel.Cell;
@@ -51,6 +56,9 @@ public class ImportSynthData {
     }
     
     public void readExcelSpreadSheet(String filePath){
+        
+        Set<SynthDataModel> synth_data = new HashSet<>();
+        
         try {
             
             InputStream is = Files.newInputStream(Paths.get(filePath));
@@ -66,6 +74,7 @@ public class ImportSynthData {
                     
                     SynthDataModel data_container = extractRowData(row);
                     
+                    synth_data.add(data_container);
                 }
                 
                 
@@ -119,6 +128,31 @@ public class ImportSynthData {
                 
                 if(column_id.contentEquals("G")){
                     
+                    Optional<PatientRace> result = Arrays.stream(PatientRace.values()).filter(p->
+                            p.name().equalsIgnoreCase(cell.getStringCellValue())).findAny();
+                    
+                    PatientRace pr = result.get();
+                    
+                   data_model.addPatientRace(pr);
+                    
+                }
+                
+                if(column_id.contentEquals("J")){
+                    Optional<PatientEthnicity> result = Arrays.stream(PatientEthnicity.values()).filter(p-> 
+                            p.name().equalsIgnoreCase(cell.getStringCellValue())).findAny();
+                    
+                    PatientEthnicity pe = result.get();
+                    
+                    data_model.addPatientEthnicity(pe);
+                }
+                
+                if(column_id.contentEquals("M")){
+                    Optional<PatientLanguage> result = Arrays.stream(PatientLanguage.values()).filter(p->
+                    p.name().equalsIgnoreCase(cell.getStringCellValue())).findAny();
+                    
+                    PatientLanguage pl = result.get();
+                    
+                    data_model.addPatientLanguage(pl);
                 }
             }
             

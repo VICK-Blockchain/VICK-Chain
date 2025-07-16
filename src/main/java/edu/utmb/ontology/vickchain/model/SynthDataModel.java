@@ -40,4 +40,18 @@ public class SynthDataModel {
     public void addPatientGender(PatientGender g_value){
         patient.setGender(g_value);
     }
+
+    public void addPatientRace(PatientModel.PatientRace pr) {
+        patient.setRace(pr);
+    }
+
+    public void addPatientEthnicity(PatientModel.PatientEthnicity pe) {
+        patient.setEthnicity(pe);
+    }
+
+    public void addPatientLanguage(PatientModel.PatientLanguage pl) {
+        patient.setPatientLanguage(pl);
+    }
+    
+    
 }

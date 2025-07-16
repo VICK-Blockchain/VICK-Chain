@@ -43,16 +43,31 @@ public class ReferenceIRI {
         //OMRSE_00000218    #PI
         //OMRSE_00000215    #first nation
         //NCIT_C43866       #Middle Eastern
-        
-        
+
         
         public static final String WHITE_RACE = "http://purl.obolibrary.org/obo/OMRSE_00000219";
         public static final String BLACK_RACE = "http://purl.obolibrary.org/obo/OMRSE_00000217";
-        public static final String OTHER_RACE = "VICK_0997";
+        public static final String OTHER_RACE = NAME_SPACE +"#"+"VICK_0997";
         public static final String ASIAN_RACE = "http://purl.obolibrary.org/obo/OMRSE_00000216";
         public static final String PACIFIC_RACE = "http://purl.obolibrary.org/obo/OMRSE_00000218";
         public static final String NATIVE_RACE = "http://purl.obolibrary.org/obo/OMRSE_00000215";
         public static final String ME_RACE = "http://purl.obolibrary.org/obo/NCIT_C77820";
+    }
+    
+    public static class EthnicityIRI{
+        //OMRSE_00000208 not hispanice
+        //OMRSE_00000207 hispanic
+        
+        public static final String HISPANIC = "http://purl.obolibrary.org/obo/OMRSE_00000207"; 
+        public static final String NON_HISPANIC = "http://purl.obolibrary.org/obo/OMRSE_00000208"; 
+    }
+    
+    public static class LanguageIRI{
+        //VICK_0993 unknown
+        //OMRSE_00000610 English
+        
+        public static final String ENGLISH = "http://purl.obolibrary.org/obo/OMRSE_00000610";
+        public static final String UNKNOWN = NAME_SPACE + "#" + "VICK_0993";
     }
 
 }
