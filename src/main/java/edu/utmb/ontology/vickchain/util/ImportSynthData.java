@@ -1,0 +1,230 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Singleton.java to edit this template
+ */
+package edu.utmb.ontology.vickchain.util;
+
+import edu.utmb.ontology.vickchain.model.PatientModel.PatientGender;
+import edu.utmb.ontology.vickchain.model.SynthDataModel;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.Map;
+import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.util.CellReference;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+/**
+ *
+ * @author mac
+ */
+public class ImportSynthData {
+    
+    private Map<Integer, String> header_row = null;
+    
+    final int ROW_HEADER_ID = 1;
+    
+    private ImportSynthData() {
+    }
+    
+    public static ImportSynthData getInstance() {
+        return ImportSynthDataHolder.INSTANCE;
+    }
+    
+    private static class ImportSynthDataHolder {
+
+        private static final ImportSynthData INSTANCE = new ImportSynthData();
+    }
+    
+    
+    public void retrieveHeaderPairs(){
+        
+    }
+    
+    public void readExcelSpreadSheet(String filePath){
+        try {
+            
+            InputStream is = Files.newInputStream(Paths.get(filePath));
+            
+            Workbook workbook = new XSSFWorkbook(is);
+            
+            Sheet sheet = workbook.getSheetAt(0);
+            
+            for(Row row: sheet){
+                
+                
+                if(row.getRowNum()> ROW_HEADER_ID){
+                    
+                    SynthDataModel data_container = extractRowData(row);
+                    
+                }
+                
+                
+                
+            }
+            
+            
+        } catch (IOException ex) {
+            Logger.getLogger(ImportSynthData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+    
+    private SynthDataModel extractRowData(Row row){
+        
+        SynthDataModel data_model = new SynthDataModel();
+        
+        for(Cell cell : row){
+            
+            if(cell !=null ||cell.getCellType() != CellType.BLANK){
+                
+                
+                String column_id = CellReference.convertNumToColString(cell.getColumnIndex());
+                
+                //patient name "A"
+                if(column_id.contentEquals("A")){
+                    String patient_name = cell.getStringCellValue();
+                    
+                    data_model.addName(patient_name);
+                    
+                }
+                
+                //patient id "B"
+                if(column_id.contentEquals("B")){
+                    String patient_id = cell.getStringCellValue();
+                    
+                    data_model.addPatientIRI(patient_id);
+                }
+                
+                if(column_id.contentEquals("D")){
+                    
+                    Optional<PatientGender> result = Arrays.stream(
+                            PatientGender.values()).filter(p->
+                                    p.name().equalsIgnoreCase(cell.getStringCellValue())).findAny();
+
+                    PatientGender pg = result.get();
+                    
+                    data_model.addPatientGender(pg);
+                    
+                }
+                
+                if(column_id.contentEquals("G")){
+                    
+                }
+            }
+            
+        }
+        
+        
+        return data_model;
+    }
+    
+    private int getMaxLenthSpreadsheet(String filePath){
+        
+        int length = 0;
+        
+        
+        try {
+            
+            InputStream resourceAsStream = Files.newInputStream(Paths.get(filePath));
+            
+            Workbook workbook = new XSSFWorkbook(resourceAsStream);
+
+            Sheet sheet = workbook.getSheetAt(0);
+            
+            Row header_row = sheet.getRow(ROW_HEADER_ID);
+            
+            for(Cell cell : header_row){
+                
+                
+                if(cell !=null ||cell.getCellType() != CellType.BLANK){
+                    length++;
+                    
+                }
+            }
+            
+            
+        } catch (IOException ex) {
+            Logger.getLogger(ImportSynthData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return length;
+    }
+    
+    
+    private int getMaxLenthSpreadsheetResource(String fileResourceName){
+        
+        int length = 0;
+        
+        InputStream resourceAsStream = ImportData.class.getClassLoader().getResourceAsStream(fileResourceName);
+
+        try {
+
+            Workbook workbook = new XSSFWorkbook(resourceAsStream);
+
+            Sheet sheet = workbook.getSheetAt(0);
+            
+            Row header_row = sheet.getRow(ROW_HEADER_ID);
+            
+            for(Cell cell : header_row){
+                
+                
+                if(cell !=null ||cell.getCellType() != CellType.BLANK){
+                    length++;
+                    
+                }
+            }
+            
+            
+        } catch (IOException ex) {
+            Logger.getLogger(ImportSynthData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return length;
+    }
+    
+    private String getValueAsString(Cell cell){
+        
+        if(CellType.NUMERIC == cell.getCellType()){
+            
+            int value = (int)cell.getNumericCellValue();
+            
+            String valueOf = String.valueOf(value);
+            
+            return valueOf;
+            
+        }
+        
+        else if(CellType.STRING == cell.getCellType()){
+            
+            String stringCellValue = cell.getStringCellValue();
+            
+            return stringCellValue;
+            
+        }
+        
+        
+        return null;
+    }
+    
+    public static void main(String[] args) {
+        
+        //int length = ImportSynthData.getInstance().getMaxLenthSpreadsheet("/Users/mac/Desktop/SyntheticData+ID.xlsx");
+        //System.out.println(length);
+        ImportSynthData instance = ImportSynthData.getInstance();
+        
+        instance.readExcelSpreadSheet("/Users/mac/Desktop/SyntheticData+ID.xlsx");
+        
+        
+        
+    }
+}

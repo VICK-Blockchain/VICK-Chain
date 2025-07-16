@@ -12,4 +12,6 @@ public class ReferenceIRIVaccine {
  
     
     public static final String MMR_VACCINE = "http://purl.obolibrary.org/obo/VO_0000731";
+    public static final String HPV_VACCINE = "http://purl.obolibrary.org/obo/VO_0000667";
+    public static final String GARDASIL = "http://purl.obolibrary.org/obo/VO_0000049";
 }

@@ -5,8 +5,6 @@
 package edu.utmb.ontology.vickchain.util;
 
 import edu.utmb.ontology.vickchain.model.SampleDataModel;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
