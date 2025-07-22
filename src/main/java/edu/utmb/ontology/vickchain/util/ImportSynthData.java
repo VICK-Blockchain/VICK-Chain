@@ -203,6 +203,26 @@ public class ImportSynthData {
                     data_model.addVaxDate(date_string);
                 }
                 
+                if(column_id.contentEquals("AH")){
+                    String value = cell.getStringCellValue();
+                    
+                    data_model.addVaxManufacturer(value);
+                }
+                
+                if(column_id.contains("AI")){
+                    String value = cell.getStringCellValue();
+                    
+                    data_model.addVaxAdministratorName(value);
+                }
+                
+                if(column_id.contains("AJ")){
+                    String value = cell.getStringCellValue();
+                    
+                    data_model.addVaxAdiminstratorID(NAME_SPACE +"#"+value);
+                }
+                
+                //TODO: ADD CHILD INFO
+                
             }
             
         }

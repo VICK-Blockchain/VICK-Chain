@@ -4,8 +4,10 @@
  */
 package edu.utmb.ontology.vickchain.model;
 
+import edu.utmb.ontology.vickchain.iri.ReferenceIRIVaccine;
 import edu.utmb.ontology.vickchain.model.PatientModel.PatientGender;
 import edu.utmb.ontology.vickchain.model.PatientVaccinationModel.Clinic;
+import static edu.utmb.ontology.vickchain.ontology.VICKManager.NAME_SPACE;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.logging.Level;
@@ -110,6 +112,26 @@ public class SynthDataModel {
         } catch (ParseException ex) {
             Logger.getLogger(SynthDataModel.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public void addVaxManufacturer(String value) {
+        
+        patient_vaccination.setVaccineManufacturer(ReferenceIRIVaccine.Manufacturer.MERCK.toString());
+        
+    }
+
+    public void addVaxAdministratorName(String value) {
+        
+        patient_vaccination.setVaxAdminName(value);
+        
+        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public void addVaxAdiminstratorID(String value) {
+        
+        patient_vaccination.setVaxAdminID(value);
+        
+        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
     

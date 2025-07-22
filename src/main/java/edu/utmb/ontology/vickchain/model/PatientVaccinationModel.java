@@ -19,9 +19,11 @@ public class PatientVaccinationModel {
     
     private String vaccine_group;
     private Resource vaccine;
-    private Resource vaccine_manufacturer;
+    private String vaccine_manufacturer;
     private Clinic clinic;
     private Date vaccine_date;
+    
+    private Vaccine_Administrator vax_admin;
     
     private boolean hasInsurance = false;
     
@@ -58,7 +60,12 @@ public class PatientVaccinationModel {
         
     }
     
-  
+    public void setVaccineManufacturer(String identifier){
+        
+        
+        
+        this.vaccine_manufacturer= identifier;
+    }
     
     public void setClinicName(String clinic_name){
         
@@ -70,6 +77,14 @@ public class PatientVaccinationModel {
         
     }
     
+    public void setVaxAdminName(String admin_name){
+        if(this.vax_admin == null){
+            vax_admin = new Vaccine_Administrator();
+        }
+        
+        vax_admin.name = admin_name;
+    }
+    
     public void setClinicID(String clinic_id){
         
         if(clinic == null){
@@ -78,6 +93,15 @@ public class PatientVaccinationModel {
         
         clinic.id = clinic_id;
         
+    }
+    
+    
+    public void setVaxAdminID(String admin_id){
+        if(this.vax_admin == null){
+            vax_admin = new Vaccine_Administrator();
+        }
+        
+        vax_admin.id = admin_id;
     }
     
     
@@ -101,8 +125,8 @@ public class PatientVaccinationModel {
             
         }
         
-        private String id;
-        private String name;
+        public String id;
+        public String name;
         
      
         
@@ -114,8 +138,8 @@ public class PatientVaccinationModel {
             
         }
         
-        private String name;
-        private String id;
+        public String name;
+        public String id;
     }
 }
 
