@@ -67,6 +67,10 @@ public class ReferenceIRI {
         //OMRSE_00000610 English
         
         public static final String ENGLISH = "http://purl.obolibrary.org/obo/OMRSE_00000610";
+        public static final String SPANISH = "http://purl.obolibrary.org/obo/OMRSE_00000849";
+        public static final String GERMAN = NAME_SPACE + "#" + "VICK_1006";
+        public static final String VIETNAMESE = NAME_SPACE + "#" + "VICK_1007";
+        public static final String SWAHILI = NAME_SPACE + "#" + "VICK_1008";
         public static final String UNKNOWN = NAME_SPACE + "#" + "VICK_0993";
     }
 

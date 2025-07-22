@@ -5,11 +5,8 @@
 package edu.utmb.ontology.vickchain.model;
 
 import edu.utmb.ontology.vickchain.iri.ReferenceIRI;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.Optional;
 import java.util.Set;
-import org.apache.jena.iri.IRI;
 
 /**
  *
@@ -52,6 +49,8 @@ public class PatientModel {
     private Set<PatientModel> children;
     private Date date;
     
+    
+    
     public enum PatientGender{
         FEMALE ("Female"),
         MALE ("Male"),
@@ -87,11 +86,13 @@ public class PatientModel {
     }
     
     public enum PatientRace{
-        American_Indian_or_Alaskan_Native ("American Indian or Alaskan Native"),
+        American_Indian_or_Alaskan_Native ("American Indian or Alaska Native"),
         Asian ("Asian"),
         Black_or_African_American ("Black or African American"),
-        Native_Hawaiian_or_Pacific_Islander ("Native Hawaiian or Pacific Islander"),
-        White ("White");
+        Native_Hawaiian_or_Pacific_Islander ("Native Hawaiian or Other Pacific Islander"),
+        White ("White"),
+        Middle_Eastern ("Middle Eastern or North African"),
+        Other("Some other race, ethnicity, or origin");
         
         private String valueString;
         
@@ -104,7 +105,7 @@ public class PatientModel {
         }
         
         public String getIRI(){
-            if(valueString.equalsIgnoreCase("American Indian or Alaskan Native")){
+            if(valueString.equalsIgnoreCase("American Indian or Alaska Native")){
                 return ReferenceIRI.RaceIRI.NATIVE_RACE;
             }
             
@@ -116,12 +117,16 @@ public class PatientModel {
                 return ReferenceIRI.RaceIRI.BLACK_RACE;
             }
             
-            if(valueString.equalsIgnoreCase("Native Hawaiian or Pacific Islander")){
+            if(valueString.equalsIgnoreCase("Native Hawaiian or Other Pacific Islander")){
                 return ReferenceIRI.RaceIRI.PACIFIC_RACE;
             }
             
             if(valueString.equalsIgnoreCase("White")){
                 return ReferenceIRI.RaceIRI.WHITE_RACE;
+            }
+            
+            if(valueString.equalsIgnoreCase("Middle Eastern or North African")){
+                return ReferenceIRI.RaceIRI.ME_RACE;
             }
             
             return ReferenceIRI.RaceIRI.OTHER_RACE;
@@ -145,7 +150,7 @@ public class PatientModel {
         
         public String getIRI(){
             
-            if(valueString.equalsIgnoreCase("Hispanic or Latino")){
+            if(valueString.trim().equalsIgnoreCase("Hispanic or Latino")){
                 return ReferenceIRI.EthnicityIRI.HISPANIC;
             }
             
@@ -156,6 +161,9 @@ public class PatientModel {
     public enum PatientLanguage{
         English ("English"),
         Spanish ("Spanish"),
+        German("German"),
+        Vietnamese("Vietnamese"),
+        Swahili("Swahili"),
         Other ("Other"),
         Unknown ("Unknown");
         
@@ -165,10 +173,30 @@ public class PatientModel {
             valueString = value;
         }
         
+        public String getStringValue(){
+            return valueString;
+        }
+        
         public String getIRI(){
             
             if(valueString.equalsIgnoreCase("English")){
                 return ReferenceIRI.LanguageIRI.ENGLISH;
+            }
+            
+            if(valueString.equalsIgnoreCase("German")){
+                return ReferenceIRI.LanguageIRI.GERMAN;
+            }
+            
+            if(valueString.equalsIgnoreCase("Swahili")){
+                return ReferenceIRI.LanguageIRI.SWAHILI;
+            }
+            
+            if(valueString.equalsIgnoreCase("Vietnamese")){
+                return ReferenceIRI.LanguageIRI.VIETNAMESE;
+            }
+            
+            if(valueString.equalsIgnoreCase("Spanish")){
+                return ReferenceIRI.LanguageIRI.SPANISH;
             }
             
             return ReferenceIRI.LanguageIRI.UNKNOWN;

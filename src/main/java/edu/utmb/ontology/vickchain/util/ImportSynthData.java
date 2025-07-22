@@ -93,7 +93,7 @@ public class ImportSynthData {
         SynthDataModel data_model = new SynthDataModel();
         
         for(Cell cell : row){
-            
+            System.out.println(row.getRowNum());
             if(cell !=null ||cell.getCellType() != CellType.BLANK){
                 
                 
@@ -118,7 +118,7 @@ public class ImportSynthData {
                     
                     Optional<PatientGender> result = Arrays.stream(
                             PatientGender.values()).filter(p->
-                                    p.name().equalsIgnoreCase(cell.getStringCellValue())).findAny();
+                                    p.getStringValue().equalsIgnoreCase(cell.getStringCellValue())).findAny();
 
                     PatientGender pg = result.get();
                     
@@ -127,19 +127,23 @@ public class ImportSynthData {
                 }
                 
                 if(column_id.contentEquals("G")){
-                    
+                    System.out.println(cell.getStringCellValue());
                     Optional<PatientRace> result = Arrays.stream(PatientRace.values()).filter(p->
-                            p.name().equalsIgnoreCase(cell.getStringCellValue())).findAny();
+                            p.getStringValue().equalsIgnoreCase(cell.getStringCellValue())).findAny();
                     
                     PatientRace pr = result.get();
-                    
-                   data_model.addPatientRace(pr);
-                    
+                        data_model.addPatientRace(pr);
+    
                 }
                 
                 if(column_id.contentEquals("J")){
+                    //System.out.println(cell.getStringCellValue());
+                    
+                    //PatientEthnicity[] values = PatientEthnicity.values();
+                    //System.out.println(values[0] + " and " + values [1]);
+                    
                     Optional<PatientEthnicity> result = Arrays.stream(PatientEthnicity.values()).filter(p-> 
-                            p.name().equalsIgnoreCase(cell.getStringCellValue())).findAny();
+                            p.getStringValue().equalsIgnoreCase(cell.getStringCellValue())).findAny();
                     
                     PatientEthnicity pe = result.get();
                     
@@ -147,8 +151,9 @@ public class ImportSynthData {
                 }
                 
                 if(column_id.contentEquals("M")){
+                    System.out.println(cell.getStringCellValue());
                     Optional<PatientLanguage> result = Arrays.stream(PatientLanguage.values()).filter(p->
-                    p.name().equalsIgnoreCase(cell.getStringCellValue())).findAny();
+                    p.getStringValue().equalsIgnoreCase(cell.getStringCellValue())).findAny();
                     
                     PatientLanguage pl = result.get();
                     
