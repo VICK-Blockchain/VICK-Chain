@@ -13,7 +13,22 @@ import java.util.Set;
  * @author mac
  */
 public class PatientModel {
-
+    private String patient_id;
+    private String first_name, last_name;
+    private PatientGender gender;
+    private PatientRace race;
+  
+    private PatientEthnicity ethnicity;
+    private PatientLanguage language;
+    
+    private int age;
+    private String email;
+    private String phone_number;
+    
+    private Set<PatientModel> children;
+    private Date date_of_birth;
+    
+    private boolean hasInsurance = false;
     public void setEthnicity(PatientEthnicity ethnicity) {
         this.ethnicity = ethnicity;
     }
@@ -34,22 +49,19 @@ public class PatientModel {
         this.race = race;
     }
     
-    private String patient_id;
-    private String first_name, last_name;
-    private PatientGender gender;
-    private PatientRace race;
-  
-    private PatientEthnicity ethnicity;
-    private PatientLanguage language;
+
+
+    public void setAge(int i) {
+        age = i;
+    }
+
+    public void setDOB(Date date) {
+        date_of_birth = date;
+    }
     
-    private int age;
-    private String email;
-    private String phone_number;
-    
-    private Set<PatientModel> children;
-    private Date date;
-    
-    
+    public void setInsurance(boolean value){
+        hasInsurance = value;
+    }
     
     public enum PatientGender{
         FEMALE ("Female"),

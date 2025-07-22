@@ -15,7 +15,7 @@ import org.apache.jena.rdf.model.Resource;
  */
 public class PatientVaccinationModel {
     
-    private Model model;
+    private Model model; //Apache Jena
     
     private String vaccine_group;
     private Resource vaccine;
@@ -38,7 +38,7 @@ public class PatientVaccinationModel {
         
     }
     
-    public void addVaxDate(Date date, String id){
+    public void setVaxDate(Date date){
         
     }
     
@@ -58,9 +58,28 @@ public class PatientVaccinationModel {
         
     }
     
-    public void addClinicLocation(Clinic clinic){
+  
+    
+    public void setClinicName(String clinic_name){
+        
+        if(clinic == null){
+            clinic = new Clinic();
+        }
+        
+        clinic.name = clinic_name;
         
     }
+    
+    public void setClinicID(String clinic_id){
+        
+        if(clinic == null){
+            clinic = new Clinic();
+        }
+        
+        clinic.id = clinic_id;
+        
+    }
+    
     
     public void addVaccineAdministrator(Vaccine_Administrator va){
         
@@ -78,6 +97,10 @@ public class PatientVaccinationModel {
     
     class Clinic{
         
+        public Clinic(){
+            
+        }
+        
         private String id;
         private String name;
         
@@ -86,6 +109,11 @@ public class PatientVaccinationModel {
     }
     
     class Vaccine_Administrator{
+        
+        public Vaccine_Administrator(){
+            
+        }
+        
         private String name;
         private String id;
     }

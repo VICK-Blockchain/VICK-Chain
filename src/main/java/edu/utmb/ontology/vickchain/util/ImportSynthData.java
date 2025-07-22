@@ -9,11 +9,13 @@ import edu.utmb.ontology.vickchain.model.PatientModel.PatientGender;
 import edu.utmb.ontology.vickchain.model.PatientModel.PatientLanguage;
 import edu.utmb.ontology.vickchain.model.PatientModel.PatientRace;
 import edu.utmb.ontology.vickchain.model.SynthDataModel;
+import static edu.utmb.ontology.vickchain.ontology.VICKManager.NAME_SPACE;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
@@ -127,7 +129,7 @@ public class ImportSynthData {
                 }
                 
                 if(column_id.contentEquals("G")){
-                    System.out.println(cell.getStringCellValue());
+                    //System.out.println(cell.getStringCellValue());
                     Optional<PatientRace> result = Arrays.stream(PatientRace.values()).filter(p->
                             p.getStringValue().equalsIgnoreCase(cell.getStringCellValue())).findAny();
                     
@@ -151,7 +153,7 @@ public class ImportSynthData {
                 }
                 
                 if(column_id.contentEquals("M")){
-                    System.out.println(cell.getStringCellValue());
+                    //System.out.println(cell.getStringCellValue());
                     Optional<PatientLanguage> result = Arrays.stream(PatientLanguage.values()).filter(p->
                     p.getStringValue().equalsIgnoreCase(cell.getStringCellValue())).findAny();
                     
@@ -159,6 +161,48 @@ public class ImportSynthData {
                     
                     data_model.addPatientLanguage(pl);
                 }
+                
+                if(column_id.contentEquals("P")){
+                    
+                    double cell_value = cell.getNumericCellValue();
+                    
+                    data_model.addAge((int) cell_value);
+                    
+                }
+                
+                if(column_id.contentEquals("S")){
+                    String date_string_value = cell.getStringCellValue();
+                    data_model.addBirthDate(date_string_value);
+                    
+                }
+                
+                if(column_id.contentEquals("V")){
+                    
+                    int numericCellValue = (int)cell.getNumericCellValue();
+                    
+                    data_model.addInsurance(numericCellValue);
+                    
+                }
+                
+                if(column_id.contentEquals("AC")){
+                    String clinic = cell.getStringCellValue();
+                    
+                    data_model.addVaxClinicName(clinic);
+                }
+                
+                if(column_id.contentEquals("AD")){
+                    
+                    String clinic_id = NAME_SPACE + "#" + cell.getStringCellValue();
+                    
+                    data_model.addVaxClinicID(clinic_id);
+                    
+                }
+                
+                if(column_id.contentEquals("AE")){
+                    String date_string = cell.getStringCellValue();
+                    data_model.addVaxDate(date_string);
+                }
+                
             }
             
         }

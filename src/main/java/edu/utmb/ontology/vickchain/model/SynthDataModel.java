@@ -5,6 +5,12 @@
 package edu.utmb.ontology.vickchain.model;
 
 import edu.utmb.ontology.vickchain.model.PatientModel.PatientGender;
+import edu.utmb.ontology.vickchain.model.PatientVaccinationModel.Clinic;
+import java.text.ParseException;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.apache.commons.lang3.time.DateUtils;
 
 /**
  *
@@ -15,7 +21,7 @@ public class SynthDataModel {
     private PatientVaccinationModel patient_vaccination;
     private PatientModel patient;
     
-    
+    private Clinic clinic;
     
     public SynthDataModel(){
        patient = new PatientModel();
@@ -51,6 +57,59 @@ public class SynthDataModel {
 
     public void addPatientLanguage(PatientModel.PatientLanguage pl) {
         patient.setPatientLanguage(pl);
+    }
+
+    public void addAge(int i) {
+        
+        patient.setAge(i);
+        
+    }
+
+    public void addBirthDate(String date_string_value) {
+        
+        try {
+            Date dob = DateUtils.parseDate(date_string_value, new String[] { "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd" });
+            patient.setDOB(dob);
+            
+        } catch (ParseException ex) {
+            Logger.getLogger(SynthDataModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void addInsurance(int value) {
+        
+        if(value == 0){
+            patient.setInsurance(false);
+        }
+        else{
+            patient.setInsurance(true);
+        }
+        
+        
+        
+    }
+
+    public void addVaxClinicName(String clinic_name) {
+        
+        patient_vaccination.setClinicName(clinic_name);
+       
+    }
+    
+    public void addVaxClinicID(String identifier){
+        
+        patient_vaccination.setClinicID(identifier);
+        
+    }
+
+    public void addVaxDate(String date_string) {
+        
+        try {
+            Date vax_date = DateUtils.parseDate(date_string, new String[] { "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd" });
+            
+            patient_vaccination.setVaxDate(vax_date);
+        } catch (ParseException ex) {
+            Logger.getLogger(SynthDataModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     
