@@ -7,7 +7,6 @@ package edu.utmb.ontology.vickchain.model;
 import edu.utmb.ontology.vickchain.iri.ReferenceIRIVaccine;
 import edu.utmb.ontology.vickchain.model.PatientModel.PatientGender;
 import edu.utmb.ontology.vickchain.model.PatientVaccinationModel.Clinic;
-import static edu.utmb.ontology.vickchain.ontology.VICKManager.NAME_SPACE;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.logging.Level;
@@ -65,6 +64,14 @@ public class SynthDataModel {
         
         patient.setAge(i);
         
+    }
+    
+    public void addPatientPhoneNumber(String value){
+        patient.setPhoneNumber(value);
+    }
+    
+    public void addPatientEmail(String value){
+        patient.setEmail(value);
     }
 
     public void addBirthDate(String date_string_value) {
@@ -124,14 +131,47 @@ public class SynthDataModel {
         
         patient_vaccination.setVaxAdminName(value);
         
-        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     public void addVaxAdiminstratorID(String value) {
         
         patient_vaccination.setVaxAdminID(value);
         
-        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public void addAddress(String value) {
+        
+        patient.setAddress(value);
+        
+    }
+
+    public void addLotNumber(String value) {
+        
+        patient_vaccination.setVaxLotNumber(value);
+    }
+
+    public void addVaxSeries(int value) {
+       
+        patient_vaccination.setVaxSeries(value);
+    }
+
+    public void addVISGivenDate(String date_string) {
+        
+        try {
+            Date value = DateUtils.parseDate(date_string, new String[] { "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd" });
+            
+            patient_vaccination.setVISGivenDate(value);
+        } catch (ParseException ex) {
+            Logger.getLogger(SynthDataModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void addVaxInjectionSite(String value) {
+        patient_vaccination.setVaxInjectionSite(value);
+    }
+
+    public void addVaxRoute(String value) {
+        patient_vaccination.setVaxRoute(value);
     }
     
     

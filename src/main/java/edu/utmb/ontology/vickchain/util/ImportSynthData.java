@@ -4,6 +4,7 @@
  */
 package edu.utmb.ontology.vickchain.util;
 
+import edu.utmb.ontology.vickchain.iri.ReferenceIRIVaccination;
 import edu.utmb.ontology.vickchain.model.PatientModel.PatientEthnicity;
 import edu.utmb.ontology.vickchain.model.PatientModel.PatientGender;
 import edu.utmb.ontology.vickchain.model.PatientModel.PatientLanguage;
@@ -219,6 +220,49 @@ public class ImportSynthData {
                     String value = cell.getStringCellValue();
                     
                     data_model.addVaxAdiminstratorID(NAME_SPACE +"#"+value);
+                }
+                
+                if(column_id.contains("AW")){
+                    String value = cell.getStringCellValue();
+                    data_model.addAddress(value);
+                }
+                
+                if(column_id.contains("AY")){
+                    String value = cell.getStringCellValue();
+                    
+                    data_model.addLotNumber(value);
+                }
+                
+                if(column_id.contains("BA")){
+                    
+                    double value = cell.getNumericCellValue();
+                    
+                    data_model.addVaxSeries((int)value);
+                }
+                
+                if(column_id.contains("BC")){
+                     String date_string = cell.getStringCellValue();
+                     data_model.addVISGivenDate(date_string);
+                }
+                
+                if(column_id.contains("BE")){
+                    
+                    //deltoid upper arm
+                    data_model.addVaxInjectionSite(ReferenceIRIVaccination.VaccineSite.DELTOID_UPPER_ARM);
+                }
+                
+                if(column_id.contains("BH")){
+                    data_model.addVaxRoute(ReferenceIRIVaccination.VaccineRoute.INTRAMUSCULAR);
+                }
+                
+                if(column_id.contains("BI")){
+                    String value = cell.getStringCellValue();
+                    data_model.addPatientPhoneNumber(value);
+                }
+                
+                if(column_id.contains("BK")){
+                    String value = cell.getStringCellValue();
+                    data_model.addPatientEmail(value);
                 }
                 
                 //TODO: ADD CHILD INFO

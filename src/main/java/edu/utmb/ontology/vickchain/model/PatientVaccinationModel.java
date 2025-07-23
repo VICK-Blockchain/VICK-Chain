@@ -23,9 +23,19 @@ public class PatientVaccinationModel {
     private Clinic clinic;
     private Date vaccine_date;
     
+    private Date VIS_given_date;
+    
     private Vaccine_Administrator vax_admin;
     
     private boolean hasInsurance = false;
+    
+    private String vaccine_lot_number;
+    
+    private int vaccine_series;
+    
+    private String vaccination_injection_site;
+    
+    private String vaccine_route;
     
     public PatientVaccinationModel(){
         
@@ -48,16 +58,16 @@ public class PatientVaccinationModel {
         
     }
     
-    public void addVaxSeries(int dose_series, String id){
-        
+    public void setVaxSeries(int vax_series){
+        vaccine_series = vax_series;
     }
     
-    public void addVaxLotNumber(String lot, String lot_id){
-        
+    public void setVaxLotNumber(String lot){
+        this.vaccine_lot_number = lot;
     }
     
-    public void addVISDate(Date date, String id){
-        
+    public void setVISGivenDate(Date value){
+        VIS_given_date = value;
     }
     
     public void setVaccineManufacturer(String identifier){
@@ -105,18 +115,21 @@ public class PatientVaccinationModel {
     }
     
     
-    public void addVaccineAdministrator(Vaccine_Administrator va){
-        
-    }
     
-    public void addVaxInjectionSite(String id){
-        
+    
+    public void setVaxInjectionSite(String id){
+        this.vaccination_injection_site = id;
     }
     
     
     
     public static void main(String[] args) {
         
+    }
+
+    void setVaxRoute(String value) {
+        
+        this.vaccine_route = value;
     }
     
     class Clinic{

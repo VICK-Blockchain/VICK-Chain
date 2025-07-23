@@ -28,6 +28,8 @@ public class PatientModel {
     private Set<PatientModel> children;
     private Date date_of_birth;
     
+    private String address;
+    
     private boolean hasInsurance = false;
     public void setEthnicity(PatientEthnicity ethnicity) {
         this.ethnicity = ethnicity;
@@ -49,7 +51,9 @@ public class PatientModel {
         this.race = race;
     }
     
-
+    public void setAddress(String address_value){
+        this.address = address_value;
+    }
 
     public void setAge(int i) {
         age = i;
@@ -61,6 +65,15 @@ public class PatientModel {
     
     public void setInsurance(boolean value){
         hasInsurance = value;
+    }
+
+    void setPhoneNumber(String value) {
+        
+        this.phone_number = value;
+    }
+    
+    void setEmail(String value){
+        this.email = value;
     }
     
     public enum PatientGender{
