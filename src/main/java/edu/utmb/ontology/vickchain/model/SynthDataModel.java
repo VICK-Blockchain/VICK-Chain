@@ -12,12 +12,15 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.lang3.time.DateUtils;
+import org.apache.jena.rdf.model.Model;
 
 /**
  *
  * @author mac
  */
 public class SynthDataModel {
+    
+    private Model model = null;
     
     private PatientVaccinationModel patient_vaccination;
     private PatientModel patient;
@@ -27,6 +30,11 @@ public class SynthDataModel {
     public SynthDataModel(){
        patient = new PatientModel();
        patient_vaccination = new PatientVaccinationModel();
+    }
+    
+    public void initModel(Model import_model){
+        model = import_model;
+        patient.initResourceModel(model);
     }
     
     public void addName(String name){

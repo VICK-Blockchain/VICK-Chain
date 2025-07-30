@@ -5,14 +5,22 @@
 package edu.utmb.ontology.vickchain.model;
 
 import edu.utmb.ontology.vickchain.iri.ReferenceIRI;
+import static edu.utmb.ontology.vickchain.ontology.VICKManagerSynth.VICK_NAME_SPACE;
 import java.util.Date;
 import java.util.Set;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.vocabulary.RDF;
 
 /**
  *
  * @author mac
  */
 public class PatientModel {
+    
+    Resource resource_patient_node = null;
+    
+    
     private String patient_id;
     private String first_name, last_name;
     private PatientGender gender;
@@ -74,6 +82,13 @@ public class PatientModel {
     
     void setEmail(String value){
         this.email = value;
+    }
+
+    void initResourceModel(Model model) {
+        
+        this.resource_patient_node = model.createResource(VICK_NAME_SPACE + this.patient_id);
+        
+        this.resource_patient_node.addProperty(RDF.type, model.getResource(ReferenceIRI.VACCINE_PATIENT));
     }
     
     public enum PatientGender{

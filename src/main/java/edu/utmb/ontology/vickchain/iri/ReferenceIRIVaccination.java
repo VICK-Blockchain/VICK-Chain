@@ -5,6 +5,7 @@
 package edu.utmb.ontology.vickchain.iri;
 
 import static edu.utmb.ontology.vickchain.ontology.VICKManager.NAME_SPACE;
+import static edu.utmb.ontology.vickchain.ontology.VICKManagerSynth.VICK_NAME_SPACE;
 
 /**
  *
@@ -23,7 +24,7 @@ public class ReferenceIRIVaccination {
     }
     
     static public class VaccineSite{
-        public static final String DELTOID_UPPER_ARM = NAME_SPACE + "#" + "VICK_6698";
+        public static final String DELTOID_UPPER_ARM = VICK_NAME_SPACE + "#" + "VICK_6698";
     }
 
 }

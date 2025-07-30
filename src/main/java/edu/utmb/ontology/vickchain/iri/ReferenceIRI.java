@@ -5,6 +5,7 @@
 package edu.utmb.ontology.vickchain.iri;
 
 import static edu.utmb.ontology.vickchain.ontology.VICKManager.NAME_SPACE;
+import static edu.utmb.ontology.vickchain.ontology.VICKManagerSynth.VICK_NAME_SPACE;
 
 /**
  *
@@ -29,7 +30,7 @@ public class ReferenceIRI {
     
     public static final String FEMALE_SEX="http://purl.obolibrary.org/obo/PATO_0000383";
     public static final String MALE_SEX="http://purl.obolibrary.org/obo/PATO_0000384";
-    public static final String UNKNOWN_SEX = NAME_SPACE + "#" +"VICK_0993";
+    public static final String UNKNOWN_SEX = VICK_NAME_SPACE + "#" +"VICK_0993";
     
     public static final String VACCINE_PATIENT="http://purl.obolibrary.org/obo/VICO_0000016";
     
@@ -47,7 +48,7 @@ public class ReferenceIRI {
         
         public static final String WHITE_RACE = "http://purl.obolibrary.org/obo/OMRSE_00000219";
         public static final String BLACK_RACE = "http://purl.obolibrary.org/obo/OMRSE_00000217";
-        public static final String OTHER_RACE = NAME_SPACE +"#"+"VICK_0997";
+        public static final String OTHER_RACE = VICK_NAME_SPACE +"#"+"VICK_0997";
         public static final String ASIAN_RACE = "http://purl.obolibrary.org/obo/OMRSE_00000216";
         public static final String PACIFIC_RACE = "http://purl.obolibrary.org/obo/OMRSE_00000218";
         public static final String NATIVE_RACE = "http://purl.obolibrary.org/obo/OMRSE_00000215";
@@ -68,10 +69,10 @@ public class ReferenceIRI {
         
         public static final String ENGLISH = "http://purl.obolibrary.org/obo/OMRSE_00000610";
         public static final String SPANISH = "http://purl.obolibrary.org/obo/OMRSE_00000849";
-        public static final String GERMAN = NAME_SPACE + "#" + "VICK_1006";
-        public static final String VIETNAMESE = NAME_SPACE + "#" + "VICK_1007";
-        public static final String SWAHILI = NAME_SPACE + "#" + "VICK_1008";
-        public static final String UNKNOWN = NAME_SPACE + "#" + "VICK_0993";
+        public static final String GERMAN = VICK_NAME_SPACE + "#" + "VICK_1006";
+        public static final String VIETNAMESE = VICK_NAME_SPACE + "#" + "VICK_1007";
+        public static final String SWAHILI = VICK_NAME_SPACE + "#" + "VICK_1008";
+        public static final String UNKNOWN = VICK_NAME_SPACE + "#" + "VICK_0993";
     }
 
 }

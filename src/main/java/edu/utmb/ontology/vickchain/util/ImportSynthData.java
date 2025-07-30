@@ -38,6 +38,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 public class ImportSynthData {
     
     private Map<Integer, String> header_row = null;
+    private Set<SynthDataModel> synth_data = null;
     
     final int ROW_HEADER_ID = 1;
     
@@ -58,9 +59,15 @@ public class ImportSynthData {
         
     }
     
+    public Set<SynthDataModel> getSynthData(){
+        
+        return this.synth_data;
+        
+    }
+    
     public void readExcelSpreadSheet(String filePath){
         
-        Set<SynthDataModel> synth_data = new HashSet<>();
+        synth_data = new HashSet<>();
         
         try {
             
@@ -96,7 +103,7 @@ public class ImportSynthData {
         SynthDataModel data_model = new SynthDataModel();
         
         for(Cell cell : row){
-            System.out.println(row.getRowNum());
+            //System.out.println(row.getRowNum());
             if(cell !=null ||cell.getCellType() != CellType.BLANK){
                 
                 
@@ -256,7 +263,7 @@ public class ImportSynthData {
                 }
                 
                 if(column_id.contains("BI")){
-                    String value = cell.getStringCellValue();
+                    String value = Long.toString((long)cell.getNumericCellValue());
                     data_model.addPatientPhoneNumber(value);
                 }
                 
