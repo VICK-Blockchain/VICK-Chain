@@ -11,6 +11,7 @@ import java.util.Set;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.vocabulary.RDF;
+import org.apache.jena.vocabulary.RDFS;
 
 /**
  *
@@ -18,8 +19,10 @@ import org.apache.jena.vocabulary.RDF;
  */
 public class PatientModel {
     
-    Resource resource_patient_node = null;
-    
+    private Resource resource_patient_node = null;
+    private Resource resource_gender_node = null;
+    private Resource resource_race_node = null;
+    private Resource resource_ethnicity_node = null;
     
     private String patient_id;
     private String first_name, last_name;
@@ -39,6 +42,36 @@ public class PatientModel {
     private String address;
     
     private boolean hasInsurance = false;
+    
+    public void initResourceModel(Model model) {
+        
+        this.resource_patient_node = model.createResource(VICK_NAME_SPACE + this.patient_id);
+        
+        this.resource_patient_node.addProperty(RDF.type, model.getResource(ReferenceIRI.VACCINE_PATIENT));
+        
+        this.resource_patient_node.addProperty(RDFS.label, first_name + " " + last_name);
+    }
+    
+    private void initGenderResource(Model model){
+        
+        
+        //gender.getIRI();
+        this.resource_gender_node = model.createResource(gender.getIRI());
+        
+        //TODO: addProperty
+    }
+    
+    private void initRaceEthnicityResource(Model model){
+        
+        this.resource_race_node = model.createResource(race.getIRI());
+        
+        
+        this.resource_ethnicity_node = model.createResource(ethnicity.getIRI());
+        
+    }
+
+    
+    
     public void setEthnicity(PatientEthnicity ethnicity) {
         this.ethnicity = ethnicity;
     }
@@ -84,12 +117,7 @@ public class PatientModel {
         this.email = value;
     }
 
-    void initResourceModel(Model model) {
-        
-        this.resource_patient_node = model.createResource(VICK_NAME_SPACE + this.patient_id);
-        
-        this.resource_patient_node.addProperty(RDF.type, model.getResource(ReferenceIRI.VACCINE_PATIENT));
-    }
+
     
     public enum PatientGender{
         FEMALE ("Female"),
@@ -112,15 +140,15 @@ public class PatientModel {
                 return ReferenceIRI.FEMALE_SEX;
             }
             
-            if(valueString == "Male"){
+            else if(valueString == "Male"){
                 return ReferenceIRI.MALE_SEX;
             }
             
-            if(valueString == "Other"){
-                
+            else {
+                return ReferenceIRI.UNKNOWN_SEX;
             }
             
-            return ReferenceIRI.VACCINE_PATIENT;
+            //return ReferenceIRI.VACCINE_PATIENT;
         }
         
     }

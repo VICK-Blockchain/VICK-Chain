@@ -7,6 +7,7 @@ package edu.utmb.ontology.vickchain.model;
 import edu.utmb.ontology.vickchain.iri.ReferenceIRIVaccine;
 import edu.utmb.ontology.vickchain.model.PatientModel.PatientGender;
 import edu.utmb.ontology.vickchain.model.PatientVaccinationModel.Clinic;
+import edu.utmb.ontology.vickchain.ontology.AbstractDataModel;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.logging.Level;
@@ -18,9 +19,9 @@ import org.apache.jena.rdf.model.Model;
  *
  * @author mac
  */
-public class SynthDataModel {
+public class SynthDataModel extends AbstractDataModel{
     
-    private Model model = null;
+    //private Model model = null;
     
     private PatientVaccinationModel patient_vaccination;
     private PatientModel patient;
@@ -31,12 +32,12 @@ public class SynthDataModel {
        patient = new PatientModel();
        patient_vaccination = new PatientVaccinationModel();
     }
-    
+    /*
     public void initModel(Model import_model){
         model = import_model;
         patient.initResourceModel(model);
     }
-    
+    */
     public void addName(String name){
        
         String[] f_l = name.split(" ");
@@ -181,6 +182,16 @@ public class SynthDataModel {
     public void addVaxRoute(String value) {
         patient_vaccination.setVaxRoute(value);
     }
+
+    @Override
+    public void initModel(Model import_model) {
+        model = import_model;
+        patient.initResourceModel(model);
+    }
+
+   
+
+    
     
     
 }
