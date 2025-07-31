@@ -41,6 +41,10 @@ public class PatientVaccinationModel {
         
     }
     
+    void initResourceModel(Model target_model) {
+        this.model = target_model;
+    }
+    
     public PatientVaccinationModel(Model target_model){
         model = target_model;
     }
@@ -131,6 +135,8 @@ public class PatientVaccinationModel {
         
         this.vaccine_route = value;
     }
+
+    
     
     class Clinic{
         

@@ -187,6 +187,7 @@ public class SynthDataModel extends AbstractDataModel{
     public void initModel(Model import_model) {
         model = import_model;
         patient.initResourceModel(model);
+        patient_vaccination.initResourceModel(model);
     }
 
    

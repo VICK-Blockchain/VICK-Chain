@@ -34,6 +34,9 @@ public class ReferenceIRI {
     
     public static final String VACCINE_PATIENT="http://purl.obolibrary.org/obo/VICO_0000016";
     
+    public static final String DOB ="http://purl.org/vick/vick.owl#Birthdate";
+    
+    public static final String PHONE = "http://purl.org/vick/vick.owl#Telephone";
     
     public static class RaceIRI{
         

@@ -5,10 +5,13 @@
 package edu.utmb.ontology.vickchain.model;
 
 import edu.utmb.ontology.vickchain.iri.ReferenceIRI;
+import edu.utmb.ontology.vickchain.iri.ReferenceIRIProperty;
 import static edu.utmb.ontology.vickchain.ontology.VICKManagerSynth.VICK_NAME_SPACE;
+import edu.utmb.ontology.vickchain.util.IDCounter;
 import java.util.Date;
 import java.util.Set;
 import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.vocabulary.RDF;
 import org.apache.jena.vocabulary.RDFS;
@@ -23,6 +26,11 @@ public class PatientModel {
     private Resource resource_gender_node = null;
     private Resource resource_race_node = null;
     private Resource resource_ethnicity_node = null;
+    private Resource resource_birthdate_node = null;
+    private Resource resource_language_node = null;
+    private Resource resource_email_node = null;
+    private Resource resource_phone_node = null;
+    private Resource resource_address_node = null;
     
     private String patient_id;
     private String first_name, last_name;
@@ -50,27 +58,111 @@ public class PatientModel {
         this.resource_patient_node.addProperty(RDF.type, model.getResource(ReferenceIRI.VACCINE_PATIENT));
         
         this.resource_patient_node.addProperty(RDFS.label, first_name + " " + last_name);
+        
+        
+        initGenderResource(model);
+        initRaceEthnicityResource(model);
+        initAgeResource(model);
+        initBirthdateResource(model);
+        initLanguageResource(model);
+        initEmailResource(model);
+        initTelephoneResource(model);
+        initAddressResource(model);
     }
     
     private void initGenderResource(Model model){
         
+        IDCounter idcounter = IDCounter.getInstance();
+        
+        this.resource_gender_node = model.createResource(VICK_NAME_SPACE +"#" + idcounter.getLatestIdentifier());
         
         //gender.getIRI();
-        this.resource_gender_node = model.createResource(gender.getIRI());
+        this.resource_gender_node.addProperty(RDF.type, model.getResource(gender.getIRI()));
         
         //TODO: addProperty
     }
     
     private void initRaceEthnicityResource(Model model){
         
-        this.resource_race_node = model.createResource(race.getIRI());
+        IDCounter idcounter = IDCounter.getInstance();
+        
+        this.resource_race_node = model.createResource(VICK_NAME_SPACE + "#"+ idcounter.getLatestIdentifier());
+        
+        this.resource_race_node.addProperty(RDF.type,model.getResource(race.getIRI()));
         
         
-        this.resource_ethnicity_node = model.createResource(ethnicity.getIRI());
+        this.resource_ethnicity_node = model.createResource(VICK_NAME_SPACE + "#" + idcounter.getLatestIdentifier());
+        this.resource_ethnicity_node.addProperty(RDF.type, model.getResource(ethnicity.getIRI()));
+        
+        //TODO: addProperty link
         
     }
 
+    private void initAgeResource(Model model){
+        Property propertyHasAge = model.getProperty(ReferenceIRIProperty.HAS_AGE);
+        this.resource_patient_node.addProperty(propertyHasAge, String.valueOf(age));
+        
+         //TODO: addProperty link
+    }
     
+    private void initBirthdateResource(Model model){
+        
+        IDCounter idcounter = IDCounter.getInstance();
+        
+        resource_birthdate_node = model.createResource(VICK_NAME_SPACE + "#" + idcounter.getLatestIdentifier()        );
+        resource_birthdate_node.addProperty(RDF.type, model.getResource(ReferenceIRI.DOB));
+        resource_birthdate_node.addProperty(RDFS.label, this.date_of_birth.toString());
+         //TODO: addProperty link
+        
+    }
+    
+    private void initLanguageResource(Model model){
+        IDCounter idcounter = IDCounter.getInstance();
+        
+        resource_language_node = model.createResource(VICK_NAME_SPACE + "#" + idcounter.getLatestIdentifier());
+        resource_language_node.addProperty(RDF.type, model.getResource(language.getIRI()));
+        
+        //TODO: addProperty link
+        
+        
+    }
+    
+    private void initInsuranceResource(Model model){
+        
+    }
+    
+    private void initEmailResource (Model model){
+        IDCounter idcounter = IDCounter.getInstance();
+        
+        resource_email_node = model.createResource(VICK_NAME_SPACE + "#" + idcounter.getLatestIdentifier());
+        resource_email_node.addProperty(RDF.type, model.getResource(ReferenceIRI.EMAIL_ADDRESS));
+        resource_email_node.addProperty(RDFS.label, this.email);
+        
+        //TODO: addProperty link
+        
+    }
+    
+    private void initTelephoneResource(Model model){
+        IDCounter idcounter = IDCounter.getInstance();
+        
+        resource_phone_node = model.createResource(VICK_NAME_SPACE + "#" + idcounter.getLatestIdentifier());
+        resource_phone_node.addProperty(RDF.type, model.getResource(ReferenceIRI.PHONE));
+        resource_phone_node.addProperty(RDFS.label, this.phone_number);
+        
+        //TODO: addProperty link
+        
+    }
+    
+    private void initAddressResource(Model model){
+        
+        IDCounter idcounter = IDCounter.getInstance();
+        
+        resource_address_node = model.createResource(VICK_NAME_SPACE + "#" + idcounter.getLatestIdentifier());
+        resource_address_node.addProperty(RDF.type, model.getResource(ReferenceIRI.POSTAL_ADDRESS));
+        resource_address_node.addProperty(RDFS.label, this.address);
+        
+        //TODO: addProperty link
+    }
     
     public void setEthnicity(PatientEthnicity ethnicity) {
         this.ethnicity = ethnicity;

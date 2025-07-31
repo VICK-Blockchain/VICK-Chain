@@ -11,6 +11,7 @@ import edu.utmb.ontology.vickchain.model.PatientModel.PatientLanguage;
 import edu.utmb.ontology.vickchain.model.PatientModel.PatientRace;
 import edu.utmb.ontology.vickchain.model.SynthDataModel;
 import static edu.utmb.ontology.vickchain.ontology.VICKManager.NAME_SPACE;
+import static edu.utmb.ontology.vickchain.ontology.VICKManagerSynth.VICK_NAME_SPACE;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -200,7 +201,7 @@ public class ImportSynthData {
                 
                 if(column_id.contentEquals("AD")){
                     
-                    String clinic_id = NAME_SPACE + "#" + cell.getStringCellValue();
+                    String clinic_id = VICK_NAME_SPACE + "#" + cell.getStringCellValue();
                     
                     data_model.addVaxClinicID(clinic_id);
                     
@@ -226,7 +227,7 @@ public class ImportSynthData {
                 if(column_id.contains("AJ")){
                     String value = cell.getStringCellValue();
                     
-                    data_model.addVaxAdiminstratorID(NAME_SPACE +"#"+value);
+                    data_model.addVaxAdiminstratorID(VICK_NAME_SPACE +"#"+value);
                 }
                 
                 if(column_id.contains("AW")){
