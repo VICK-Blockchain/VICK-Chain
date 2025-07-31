@@ -4,10 +4,16 @@
  */
 package edu.utmb.ontology.vickchain.model;
 
+import edu.utmb.ontology.vickchain.iri.ReferenceIRIVaccination;
+import edu.utmb.ontology.vickchain.iri.ReferenceIRIVaccine;
+import static edu.utmb.ontology.vickchain.ontology.VICKManagerSynth.VICK_NAME_SPACE;
+import edu.utmb.ontology.vickchain.util.IDCounter;
 import java.util.Date;
 import java.util.Set;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.vocabulary.RDF;
+import org.apache.jena.vocabulary.RDFS;
 
 /**
  *
@@ -15,10 +21,16 @@ import org.apache.jena.rdf.model.Resource;
  */
 public class PatientVaccinationModel {
     
-    private Model model; //Apache Jena
+    private Model resource_model; //Apache Jena
     
-    private String vaccine_group;
-    private Resource vaccine;
+    private Resource vaccine_node = null;
+    private Resource vaccine_manufacturer_node = null;
+    private Resource vaccine_route_node = null;
+    private Resource vaccine_date_node = null;
+    private Resource vaccine_administrator_node = null;
+    private Resource VIS_given_date_node = null;
+    //private String vaccine_group;
+    
     private String vaccine_manufacturer;
     private Clinic clinic;
     private Date vaccine_date;
@@ -41,13 +53,73 @@ public class PatientVaccinationModel {
         
     }
     
-    void initResourceModel(Model target_model) {
-        this.model = target_model;
+    public void initResourceModel(Model model) {
+        this.resource_model = model;
+        
+        initVaccineResource(model);
+        initVaxManufacturerResource(model);
+        initVaxRouteResource(model);
+        initVaxDateResource(model);
+        initVaccineAdminResource(model);
     }
     
-    public PatientVaccinationModel(Model target_model){
-        model = target_model;
+    private void initVISGivenDateResource(Model model){
+        
     }
+    
+    private void initVaccineAdminResource(Model model){
+        
+        
+        String id = vax_admin.id;
+        String name = vax_admin.name;
+        
+        vaccine_administrator_node = model.getResource(VICK_NAME_SPACE + "#" + id);
+        vaccine_administrator_node.addProperty(RDF.type, ReferenceIRIVaccination.VaccineAdministrator.PHYSICIAN);
+        vaccine_administrator_node.addProperty(RDFS.label, name);
+        
+        //TODO add property link
+    }
+    
+    private void initVaccineResource(Model model){
+        
+        IDCounter idcounter = IDCounter.getInstance();
+        
+        vaccine_node = model.getResource(VICK_NAME_SPACE + "#" + idcounter.getLatestIdentifier());
+        vaccine_node.addProperty(RDF.type, model.getResource(ReferenceIRIVaccine.GARDASIL));
+        
+        //TODO add property link
+        
+    }
+    
+    private void initVaxDateResource(Model model){
+        IDCounter idcounter = IDCounter.getInstance();
+        
+        vaccine_date_node = model.getResource(VICK_NAME_SPACE + "#" + idcounter.getLatestIdentifier());
+        //vaccine_date_node.addProperty(RDF.type, ReferenceIRIVaccination.) TODO create ontology class 
+        vaccine_date_node.addProperty(RDFS.label, vaccine_date.toString());
+        
+        //TODO add property link
+    }
+    
+    private void initVaxRouteResource(Model model){
+        IDCounter idcounter = IDCounter.getInstance();
+        
+        vaccine_route_node = model.getResource(VICK_NAME_SPACE + "#" + idcounter.getLatestIdentifier());
+        vaccine_route_node.addProperty(RDF.type, model.getResource(ReferenceIRIVaccination.VaccineRoute.INTRAMUSCULAR));
+        vaccine_route_node.addProperty(RDFS.label, vaccine_route);
+    }
+    
+    private void initVaxManufacturerResource(Model model){
+        
+        IDCounter idcounter = IDCounter.getInstance();
+        
+        vaccine_manufacturer_node = model.getResource(VICK_NAME_SPACE + "#" + idcounter.getLatestIdentifier());
+        vaccine_manufacturer_node.addProperty(RDF.type, ReferenceIRIVaccine.Manufacturer.MERCK);
+        vaccine_manufacturer_node.addProperty(RDFS.label, vaccine_manufacturer);
+        
+         //TODO add property link
+    }
+    
     
     public void addPatientVaccination(VaccineList vaccine){
         
@@ -55,7 +127,7 @@ public class PatientVaccinationModel {
     }
     
     public void setVaxDate(Date date){
-        
+        vaccine_date = date;
     }
     
     public void addVaxDose(int dose_number, String id){

@@ -26,5 +26,10 @@ public class ReferenceIRIVaccination {
     static public class VaccineSite{
         public static final String DELTOID_UPPER_ARM = VICK_NAME_SPACE + "#" + "VICK_6698";
     }
+    
+    static public class VaccineAdministrator{
+        public static final String PROVIDER = "http://purl.org/vick/vick.owl#Provider";
+        public static final String PHYSICIAN = "http://purl.org/vick/vick.owl#Physician";
+    }
 
 }
