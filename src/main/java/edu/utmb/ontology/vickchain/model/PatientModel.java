@@ -378,4 +378,42 @@ public class PatientModel {
     public void setPatientLanguage(PatientLanguage language_value){
         language = language_value;
     }
+
+    public Resource getResource_patient_node() {
+        return resource_patient_node;
+    }
+
+    public Resource getResource_gender_node() {
+        return resource_gender_node;
+    }
+
+    public Resource getResource_race_node() {
+        return resource_race_node;
+    }
+
+    public Resource getResource_ethnicity_node() {
+        return resource_ethnicity_node;
+    }
+
+    public Resource getResource_birthdate_node() {
+        return resource_birthdate_node;
+    }
+
+    public Resource getResource_language_node() {
+        return resource_language_node;
+    }
+
+    public Resource getResource_email_node() {
+        return resource_email_node;
+    }
+
+    public Resource getResource_phone_node() {
+        return resource_phone_node;
+    }
+
+    public Resource getResource_address_node() {
+        return resource_address_node;
+    }
+    
+    
 }

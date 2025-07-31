@@ -31,5 +31,9 @@ public class ReferenceIRIVaccination {
         public static final String PROVIDER = "http://purl.org/vick/vick.owl#Provider";
         public static final String PHYSICIAN = "http://purl.org/vick/vick.owl#Physician";
     }
+    
+    static public class Organization{
+        public static final String ORGANIZATION = "http://purl.obolibrary.org/obo/OBI_0000245";
+    }
 
 }

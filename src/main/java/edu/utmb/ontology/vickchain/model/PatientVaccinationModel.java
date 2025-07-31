@@ -28,7 +28,8 @@ public class PatientVaccinationModel {
     private Resource vaccine_route_node = null;
     private Resource vaccine_date_node = null;
     private Resource vaccine_administrator_node = null;
-    private Resource VIS_given_date_node = null;
+    private Resource clinic_node = null;
+    //private Resource VIS_given_date_node = null;
     //private String vaccine_group;
     
     private String vaccine_manufacturer;
@@ -61,6 +62,18 @@ public class PatientVaccinationModel {
         initVaxRouteResource(model);
         initVaxDateResource(model);
         initVaccineAdminResource(model);
+        initClinicResource(model);
+    }
+    
+    private void initClinicResource(Model model){
+        
+        String id = clinic.id;
+        String name = clinic.name;
+        
+        clinic_node = model.getResource(VICK_NAME_SPACE + "#" + id);
+        clinic_node.addProperty(RDF.type, ReferenceIRIVaccination.Organization.ORGANIZATION);
+        clinic_node.addProperty(RDFS.label, name);
+        
     }
     
     private void initVISGivenDateResource(Model model){
@@ -232,5 +245,32 @@ public class PatientVaccinationModel {
         public String name;
         public String id;
     }
+
+    public Resource getVaccine_node() {
+        return vaccine_node;
+    }
+
+    public Resource getVaccine_manufacturer_node() {
+        return vaccine_manufacturer_node;
+    }
+
+    public Resource getVaccine_route_node() {
+        return vaccine_route_node;
+    }
+
+    public Resource getVaccine_date_node() {
+        return vaccine_date_node;
+    }
+
+    public Resource getVaccine_administrator_node() {
+        return vaccine_administrator_node;
+    }
+
+    public Resource getClinic_node() {
+        return clinic_node;
+    }
+
+  
+    
 }
 

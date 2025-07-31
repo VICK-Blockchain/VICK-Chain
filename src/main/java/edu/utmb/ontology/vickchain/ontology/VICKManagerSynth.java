@@ -6,6 +6,7 @@ package edu.utmb.ontology.vickchain.ontology;
 
 import edu.utmb.ontology.vickchain.model.SynthDataModel;
 import edu.utmb.ontology.vickchain.util.ImportSynthData;
+import java.io.ByteArrayOutputStream;
 import java.util.Set;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
@@ -44,6 +45,20 @@ public class VICKManagerSynth extends VICKEncoderImpl{
         
         
         System.out.println(synthData.size());
+        
+        int i = 1;
+        for(SynthDataModel dm : synthData){
+            
+            dm.initModel(model);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            
+            model.write(baos, "NT");
+            
+            this.saveDataAsNT(model, String.valueOf(i));
+            i++;
+            
+        }
+        
     }
     
     public static void main(String[] args) {
