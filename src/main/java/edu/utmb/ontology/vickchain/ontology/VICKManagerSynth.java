@@ -7,9 +7,17 @@ package edu.utmb.ontology.vickchain.ontology;
 import edu.utmb.ontology.vickchain.model.SynthDataModel;
 import edu.utmb.ontology.vickchain.util.ImportSynthData;
 import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.apache.jena.query.Dataset;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.riot.Lang;
+import org.apache.jena.riot.RDFDataMgr;
 
 /**
  *
@@ -17,7 +25,7 @@ import org.apache.jena.rdf.model.ModelFactory;
  */
 public class VICKManagerSynth extends VICKEncoderImpl{
     
-    public static final String VICK_NAME_SPACE = "http://purl.org/vick/vick.owl#";
+    public static final String VICK_NAME_SPACE = "http://purl.org/vick/vick.owl";
     
     private final String path_file = "/Users/mac/Desktop/SyntheticData+ID.xlsx";
     
@@ -25,8 +33,9 @@ public class VICKManagerSynth extends VICKEncoderImpl{
 
     
     private VICKManagerSynth() {
-        
+       
         model = ModelFactory.createDefaultModel();
+        
     }
     
     public static VICKManagerSynth getInstance() {
@@ -48,15 +57,18 @@ public class VICKManagerSynth extends VICKEncoderImpl{
         
         int i = 1;
         for(SynthDataModel dm : synthData){
-            
+            model = ModelFactory.createDefaultModel();
             dm.initModel(model);
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            //System.out.println("\n\n=========================\n");
+            try {
+                RDFDataMgr.write(new FileOutputStream(i + ".nt"), model, Lang.NT);
+                i++;
+             
+            } catch (IOException ex) {
+                Logger.getLogger(VICKManagerSynth.class.getName()).log(Level.SEVERE, null, ex);
+            }
             
-            model.write(baos, "NT");
-            
-            this.saveDataAsNT(model, String.valueOf(i));
-            i++;
-            
+           
         }
         
     }

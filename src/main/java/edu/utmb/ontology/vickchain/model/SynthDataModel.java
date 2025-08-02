@@ -26,12 +26,26 @@ public class SynthDataModel extends AbstractDataModel{
     private PatientVaccinationModel patient_vaccination;
     private PatientModel patient;
     
-    private Clinic clinic;
+    //private Clinic clinic;
     
     public SynthDataModel(){
        patient = new PatientModel();
        patient_vaccination = new PatientVaccinationModel();
     }
+    
+    @Override
+    public String toString(){
+        
+        StringBuilder content = new StringBuilder();
+        
+        content.append(patient.toString());
+        
+        
+        return content.toString();
+        
+    }
+    
+   
     /*
     public void initModel(Model import_model){
         model = import_model;
@@ -132,7 +146,7 @@ public class SynthDataModel extends AbstractDataModel{
 
     public void addVaxManufacturer(String value) {
         
-        patient_vaccination.setVaccineManufacturer(ReferenceIRIVaccine.Manufacturer.MERCK.toString());
+        patient_vaccination.setVaccineManufacturer(ReferenceIRIVaccine.Manufacturer.MERCK);
         
     }
 

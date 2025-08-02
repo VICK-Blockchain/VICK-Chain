@@ -51,6 +51,22 @@ public class PatientModel {
     
     private boolean hasInsurance = false;
     
+    public PatientModel(){
+        
+    }
+    
+    public String toString(){
+        
+        StringBuilder content = new StringBuilder();
+        
+        content.append("PATIENT INFO\n");
+        content.append("\t First Name:" + first_name + "\n");
+        content.append("\t Last Name:" + last_name + "\n");
+        
+        return content.toString();
+        
+    }
+    
     public void initResourceModel(Model model) {
         
         this.resource_patient_node = model.createResource(VICK_NAME_SPACE + this.patient_id);
