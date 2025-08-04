@@ -6,14 +6,11 @@ package edu.utmb.ontology.vickchain.ontology;
 
 import edu.utmb.ontology.vickchain.model.SynthDataModel;
 import edu.utmb.ontology.vickchain.util.ImportSynthData;
-import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.apache.jena.query.Dataset;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.riot.Lang;
