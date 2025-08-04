@@ -9,11 +9,13 @@ import edu.utmb.ontology.vickchain.model.SampleDataModel;
 import edu.utmb.ontology.vickchain.util.IDCounter;
 import edu.utmb.ontology.vickchain.util.ImportData;
 import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.riot.Lang;
 
 /**
  *
@@ -113,6 +115,8 @@ public class VICKManager extends VICKEncoderImpl{
 
         vm.createNTExport();
     }
+
+    
 
    
 

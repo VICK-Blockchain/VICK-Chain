@@ -4,9 +4,11 @@
  */
 package edu.utmb.ontology.vickchain.ontology;
 
+import java.io.FileOutputStream;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.riot.Lang;
 
 /**
  *
@@ -14,6 +16,7 @@ import org.apache.jena.rdf.model.Resource;
  */
 public interface VICKEncoder  {
     
+    public void saveData(FileOutputStream fos, Model model, Lang langformat);
     public void saveDataAsNT(Model exportModel, String file_name);
     public Resource encodePatientResource(Model exportModel);
     public Resource encodePatientFamilyName(Model exportModel, String label);

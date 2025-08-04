@@ -59,6 +59,7 @@ public class VICKManagerSynth extends VICKEncoderImpl{
             //System.out.println("\n\n=========================\n");
             try {
                 RDFDataMgr.write(new FileOutputStream(i + ".nt"), model, Lang.NT);
+                
                 i++;
              
             } catch (IOException ex) {
