@@ -14,16 +14,14 @@ import java.util.LinkedList;
  *
  * @author tuan
  */
-public class ImmunizationExchanges {
-    
-    
-    
+public class ImmunizationExchange {
+
     private PrivateKey privateKey;
     private PublicKey publicKey;
     
     private LinkedList<String> immunization_record;
     
-    public ImmunizationExchanges(LinkedList <String> imm_record){
+    public ImmunizationExchange(LinkedList <String> imm_record){
         this.produceKeys();
         
     }

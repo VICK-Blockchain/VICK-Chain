@@ -61,7 +61,7 @@ public class CryptUtil {
     
     public boolean legitSignedImmunizationRecord(PublicKey publicKey, String data, byte[] byte_signature) {
         
-        boolean is_legit;
+        boolean is_legit = false;
         
         try {
             Signature signature = Signature.getInstance("ECDSA", "BC");

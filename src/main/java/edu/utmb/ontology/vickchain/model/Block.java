@@ -24,8 +24,6 @@ public class Block {
     
     private LinkedList<ImmunizationExchanges> records;
     
-    
-    
     public Block(long index, String previous_hash, LinkedList <ImmunizationExchanges> records_input)
     {
         
@@ -48,6 +46,15 @@ public class Block {
        String hash_result = util.hashTransform(records);
        
        return hash_result;
+    }
+    
+    public String getHashData(){
+        
+        return this.hash;
+    }
+    
+    public String getPreviousHashData(){
+        return this.previous_hash;
     }
     
     private String generateDateTime(){
