@@ -4,7 +4,7 @@
  */
 package edu.utmb.ontology.vickchain.util;
 
-import edu.utmb.ontology.vickchain.model.ImmunizationRecording;
+import edu.utmb.ontology.vickchain.exchange.ImmunizationRecording;
 import java.io.UnsupportedEncodingException;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;

@@ -4,6 +4,7 @@
  */
 package edu.utmb.ontology.vickchain.model;
 
+import edu.utmb.ontology.vickchain.exchange.ImmunizationRecording;
 import edu.utmb.ontology.vickchain.util.CryptUtil;
 import java.time.LocalDateTime;
 import java.util.LinkedList;

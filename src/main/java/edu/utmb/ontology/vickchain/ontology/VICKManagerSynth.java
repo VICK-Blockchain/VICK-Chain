@@ -6,8 +6,11 @@ package edu.utmb.ontology.vickchain.ontology;
 
 import edu.utmb.ontology.vickchain.model.SynthDataModel;
 import edu.utmb.ontology.vickchain.util.ImportSynthData;
+import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.util.LinkedList;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,6 +30,8 @@ public class VICKManagerSynth extends VICKEncoderImpl{
     private final String path_file = "/Users/mac/Desktop/SyntheticData+ID.xlsx";
     
     private Model model = null;
+    
+    private LinkedList<String> vick_synth_data = null;
 
     
     private VICKManagerSynth() {
@@ -45,6 +50,9 @@ public class VICKManagerSynth extends VICKEncoderImpl{
     }
     
     public void createNTExport(){
+        
+        vick_synth_data  = new LinkedList<String>();
+        
         ImportSynthData instance = ImportSynthData.getInstance();
         instance.readExcelSpreadSheet(path_file);
         Set<SynthDataModel> synthData = instance.getSynthData();
@@ -56,9 +64,15 @@ public class VICKManagerSynth extends VICKEncoderImpl{
         for(SynthDataModel dm : synthData){
             model = ModelFactory.createDefaultModel();
             dm.initModel(model);
-            //System.out.println("\n\n=========================\n");
+          
             try {
                 RDFDataMgr.write(new FileOutputStream(i + ".nt"), model, Lang.NT);
+                
+                //
+                ByteArrayOutputStream byte_stream = new ByteArrayOutputStream();
+                model.write(byte_stream, "NT");
+                
+                vick_synth_data.add(byte_stream.toString(Charset.forName("UTF-8")));
                 
                 i++;
              
