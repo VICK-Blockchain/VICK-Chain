@@ -12,42 +12,12 @@ import java.security.PublicKey;
 import java.util.LinkedList;
 
 /**
- *
+ * DECPRECATED
  * @author mac
  */
 public class ImmunizationCard {
     
-    private PrivateKey privateKey;
-    private PublicKey publicKey;
+   
     
-    private LinkedList<Block> vickchain;
-    
-    public ImmunizationCard(LinkedList <Block> vick_chain){
-        
-        this.produceKeys();
-        
-        this.vickchain = new LinkedList<Block>();
-        
-        this.vickchain.addAll(vick_chain);
-        
-        
-        
-    }
-    
-    private void produceKeys(){
-        
-        CryptUtil util = CryptUtil.getInstance();
-        KeyPair keys = util.produceKeys();
-        privateKey = keys.getPrivate();
-        publicKey = keys.getPublic();
-        
-    }
-    
-    public ImmunizationRecording record(String receiver){
-        
-        //DocumentImmunization di = new Dcou
-        
-        return null;
-    }
-    
+ 
 }

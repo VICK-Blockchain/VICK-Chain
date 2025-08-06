@@ -4,14 +4,20 @@
  */
 package edu.utmb.ontology.vickchain.util;
 
-import edu.utmb.ontology.vickchain.exchange.ImmunizationRecording;
+import edu.utmb.ontology.vickchain.exchange.ImmunizationExchanges;
 import java.io.UnsupportedEncodingException;
+import java.security.InvalidAlgorithmParameterException;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+import java.security.SecureRandom;
 import java.security.Security;
+import java.security.Signature;
+import java.security.spec.ECGenParameterSpec;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,6 +35,50 @@ public class CryptUtil {
         Security.addProvider(new BouncyCastleProvider());
     }
     
+    public byte[] signImmunizationRecordData(PrivateKey private_key, String input) {
+        
+        byte[] output = new byte[0];
+        
+        try {
+            Signature signature = Signature.getInstance("ECDSA", "BC");
+            
+            signature.initSign(private_key);
+            
+            byte[] string_bytes = input.getBytes();
+            
+            signature.update(string_bytes);
+            
+            byte[] byte_signature = signature.sign();
+            
+            output = byte_signature;
+            
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        
+        return output;
+    }
+    
+    public boolean legitSignedImmunizationRecord(PublicKey publicKey, String data, byte[] byte_signature) {
+        
+        boolean is_legit;
+        
+        try {
+            Signature signature = Signature.getInstance("ECDSA", "BC");
+            
+            signature.initVerify(publicKey);
+            
+            signature.update(data.getBytes());
+            
+            is_legit = signature.verify(byte_signature);
+            
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        
+        return is_legit;
+    }
+    
     public synchronized static CryptUtil getInstance(){
         
         if(INSTANCE == null){
@@ -40,11 +90,11 @@ public class CryptUtil {
         return INSTANCE;
     }
     
-    public String hashTransform(LinkedList<ImmunizationRecording> documents){
+    public String hashTransform(LinkedList<ImmunizationExchanges> documents){
         String input_data ="";
         
         for(int i=0; i<documents.size();i++){
-            ImmunizationRecording ex = documents.get(i);
+            ImmunizationExchanges ex = documents.get(i);
         }
         
         String input = input_data; //TODO add additional... previous hash, timedate, index
@@ -90,12 +140,17 @@ public class CryptUtil {
         
         try {
             KeyPairGenerator generator = KeyPairGenerator.getInstance("ECDSA","BC");
+            SecureRandom secureRandom = SecureRandom.getInstance("SHA1PRNG");
+	    ECGenParameterSpec params = new ECGenParameterSpec("secp192k1");
+            generator.initialize(params, secureRandom);
             
             key_pairs = generator.genKeyPair();
             
         } catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(CryptUtil.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NoSuchProviderException ex) {
+            Logger.getLogger(CryptUtil.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InvalidAlgorithmParameterException ex) {
             Logger.getLogger(CryptUtil.class.getName()).log(Level.SEVERE, null, ex);
         }
         

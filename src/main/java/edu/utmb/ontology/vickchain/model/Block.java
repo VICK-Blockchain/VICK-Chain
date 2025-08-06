@@ -4,7 +4,7 @@
  */
 package edu.utmb.ontology.vickchain.model;
 
-import edu.utmb.ontology.vickchain.exchange.ImmunizationRecording;
+import edu.utmb.ontology.vickchain.exchange.ImmunizationExchanges;
 import edu.utmb.ontology.vickchain.util.CryptUtil;
 import java.time.LocalDateTime;
 import java.util.LinkedList;
@@ -22,18 +22,18 @@ public class Block {
     
     private long index;
     
-    private LinkedList<ImmunizationRecording> records;
+    private LinkedList<ImmunizationExchanges> records;
     
     
     
-    public Block(long index, String previous_hash, LinkedList <ImmunizationRecording> records_input)
+    public Block(long index, String previous_hash, LinkedList <ImmunizationExchanges> records_input)
     {
         
         this.index = index;
         this.datetime = this.generateDateTime();
         this.previous_hash = previous_hash;
        
-        this.records = new LinkedList<ImmunizationRecording>();
+        this.records = new LinkedList<ImmunizationExchanges>();
         this.records.addAll(records_input);
         
         

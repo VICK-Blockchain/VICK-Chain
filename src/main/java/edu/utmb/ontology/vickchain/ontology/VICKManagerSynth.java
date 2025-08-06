@@ -40,6 +40,10 @@ public class VICKManagerSynth extends VICKEncoderImpl{
         
     }
     
+    public LinkedList<String> getSynthData(){
+        return vick_synth_data;
+    }
+    
     public static VICKManagerSynth getInstance() {
         return VICKManagerSynthHolder.INSTANCE;
     }
@@ -65,20 +69,13 @@ public class VICKManagerSynth extends VICKEncoderImpl{
             model = ModelFactory.createDefaultModel();
             dm.initModel(model);
           
-            try {
-                RDFDataMgr.write(new FileOutputStream(i + ".nt"), model, Lang.NT);
-                
-                //
-                ByteArrayOutputStream byte_stream = new ByteArrayOutputStream();
-                model.write(byte_stream, "NT");
-                
-                vick_synth_data.add(byte_stream.toString(Charset.forName("UTF-8")));
-                
-                i++;
-             
-            } catch (IOException ex) {
-                Logger.getLogger(VICKManagerSynth.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            //RDFDataMgr.write(new FileOutputStream(i + ".nt"), model, Lang.NT);
+            
+            //
+            ByteArrayOutputStream byte_stream = new ByteArrayOutputStream();
+            model.write(byte_stream, "NT");
+            vick_synth_data.add(byte_stream.toString(Charset.forName("UTF-8")));
+            i++;
             
            
         }
