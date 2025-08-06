@@ -4,7 +4,7 @@
  */
 package edu.utmb.ontology.vickchain.util;
 
-import edu.utmb.ontology.vickchain.exchange.ImmunizationExchanges;
+import edu.utmb.ontology.vickchain.exchange.ImmunizationExchange;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.KeyPair;
@@ -90,11 +90,11 @@ public class CryptUtil {
         return INSTANCE;
     }
     
-    public String hashTransform(LinkedList<ImmunizationExchanges> documents){
+    public String hashTransform(LinkedList<ImmunizationExchange> documents){
         String input_data ="";
         
         for(int i=0; i<documents.size();i++){
-            ImmunizationExchanges ex = documents.get(i);
+            ImmunizationExchange ex = documents.get(i);
         }
         
         String input = input_data; //TODO add additional... previous hash, timedate, index
