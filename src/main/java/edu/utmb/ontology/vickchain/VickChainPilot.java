@@ -1,5 +1,6 @@
 package edu.utmb.ontology.vickchain;
 
+import edu.utmb.ontology.vickchain.exchange.ImmunizationExchange;
 import edu.utmb.ontology.vickchain.exchange.ImmunizationRecord;
 import edu.utmb.ontology.vickchain.model.Block;
 import edu.utmb.ontology.vickchain.ontology.VICKManagerSynth;
@@ -20,38 +21,53 @@ public class VICKChainPilot {
     
     private VICKManagerSynth synthPatientRecords = null;
     
-    private ArrayList<Block> vick_chain = new ArrayList<Block>();
-    
-    private LinkedList<String> synthData = null;
-    
-    private LinkedList<ImmunizationRecord> records = null;
+    private VICKChain vick_chain;
+        
+    private LinkedList<ImmunizationExchange> records = null;
     
     public VICKChainPilot(){
+        
+        vick_chain = new VICKChain();
         
         synthPatientRecords = VICKManagerSynth.getInstance();
         synthPatientRecords.createNTExport();
         
         crypto_utility = CryptUtil.getInstance();
         
-        records = new LinkedList<ImmunizationRecord>();
+        records = new LinkedList<ImmunizationExchange>();
         
     }
     
-    public void signIndividualImmunizationRecord(){
+    public LinkedList<String> getSyntheticData(){
         
-        synthData = synthPatientRecords.getSynthData();
+        return synthPatientRecords.getSynthData();
+    }
+
+    public LinkedList<ImmunizationExchange> getRecords() {
+        return records;
+    }
+    
+    private void addNewBlock (LinkedList<ImmunizationExchange> values){
         
-        Agent agent1 = new Agent();
-        Agent agent2 = new Agent();
+        Block block = new Block(0, null, values);
         
-        PrivateKey privateKey = agent2.getPrivateKey();
-        PublicKey publicKey = agent1.getPublicKey();
+        //mineblock
         
-        System.out.println("private key: " + privateKey);
-        System.out.println("public key: " + publicKey);
+        vick_chain.insertBlock(block);
         
+    }
+
+    public ImmunizationExchange transmitImmunizationRecord(Agent sender, Agent receiver, String record){
         
+        ImmunizationExchange exchange_record = new ImmunizationExchange(sender.getPublicKey(), receiver.getPublicKey(), record);
         
+        exchange_record.signRecord(sender.getPrivateKey());
+        
+        records.add(exchange_record);
+        
+        this.addNewBlock(records);
+        
+        return exchange_record;
     }
     
     //validate chain
@@ -60,9 +76,15 @@ public class VICKChainPilot {
     
     public static void main(String[] args) {
         
+        Agent agent1 = new Agent();
+        Agent agent2 = new Agent();
+        
         VICKChainPilot sim = new VICKChainPilot();
         
-        sim.signIndividualImmunizationRecord();
+        LinkedList<String> patient_data = sim.getSyntheticData();
+        
+        sim.transmitImmunizationRecord(agent1, agent2, patient_data.get(7));
+        
         
         
     }

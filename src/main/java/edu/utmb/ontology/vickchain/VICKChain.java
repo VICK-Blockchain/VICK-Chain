@@ -16,6 +16,15 @@ public class VICKChain {
     private LinkedList<Block> VICK_Chain;
     
     public VICKChain(){
+        VICK_Chain = new LinkedList<Block>();
+    }
+    
+    public void insertBlock(Block block){
+        VICK_Chain.add(block);
+    }
+    
+    
+    private void mineBlock(Block block){
         
     }
     

@@ -39,10 +39,20 @@ public class Block {
         
     }
     
+    public void addImmunizationRecord(ImmunizationExchange immunization_exchange){
+        
+        //check if it is origin block or verified, otherwise return
+        
+        records.add(immunization_exchange);
+        
+    }
+    
     public String calculateHash(){
        CryptUtil util = CryptUtil.getInstance();
-        
-        
+       
+       
+       
+       
        String hash_result = util.hashTransform(records);
        
        return hash_result;
