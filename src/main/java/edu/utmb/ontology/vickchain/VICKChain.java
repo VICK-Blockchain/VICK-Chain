@@ -13,6 +13,9 @@ import java.util.LinkedList;
  */
 public class VICKChain {
     
+    
+    int difficulty_value = 5;
+    
     private LinkedList<Block> VICK_Chain;
     
     public VICKChain(){
@@ -20,11 +23,29 @@ public class VICKChain {
     }
     
     public void insertBlock(Block block){
-        VICK_Chain.add(block);
+        
+        VICK_Chain.add(mineBlock(block));
     }
     
     
-    private void mineBlock(Block block){
+    private Block mineBlock(Block block){
+        
+        System.out.println("mining...");
+       
+        
+        String target_challenge = new String(new char[difficulty_value]).replace('\0', '0');
+        
+        while(!block.getHashData().substring(0, difficulty_value).equals(target_challenge)){
+            //nonce++;
+            block.incrementNonce();
+            String calculateHash = block.calculateHash();
+            System.out.println(calculateHash);
+            block.setHash(calculateHash);
+            
+        }
+        
+        
+        return block;
         
     }
     

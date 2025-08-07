@@ -15,6 +15,8 @@ import java.util.LinkedList;
  */
 public class Block {
     
+    private int nonce;
+    
     private String datetime;
     
     private String hash;
@@ -47,13 +49,21 @@ public class Block {
         
     }
     
+    public void incrementNonce(){
+        nonce++;
+    }
+
+    public void setHash(String hash) {
+        this.hash = hash;
+    }
+    
     public String calculateHash(){
        CryptUtil util = CryptUtil.getInstance();
        
        //String hash_result;
        
        
-        String hash_result = util.convertSHA256(Long.toString(index) + previous_hash + datetime + records.toString());
+        String hash_result = util.convertSHA256(Long.toString(index) + previous_hash + datetime + records.toString() + Integer.toString(nonce));
        
        //String hash_result = util.hashTransform(records);
        
