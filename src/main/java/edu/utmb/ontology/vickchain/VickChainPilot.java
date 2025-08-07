@@ -74,6 +74,8 @@ public class VICKChainPilot {
     
     //validate block
     
+    //genesis block
+    
     public static void main(String[] args) {
         
         Agent agent1 = new Agent();
