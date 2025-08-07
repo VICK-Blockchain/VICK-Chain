@@ -50,10 +50,12 @@ public class Block {
     public String calculateHash(){
        CryptUtil util = CryptUtil.getInstance();
        
+       //String hash_result;
        
        
+        String hash_result = util.convertSHA256(Long.toString(index) + previous_hash + datetime + records.toString());
        
-       String hash_result = util.hashTransform(records);
+       //String hash_result = util.hashTransform(records);
        
        return hash_result;
     }
