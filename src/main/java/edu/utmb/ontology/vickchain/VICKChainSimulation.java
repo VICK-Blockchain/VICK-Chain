@@ -16,6 +16,8 @@ import java.util.LinkedList;
  */
 public class VICKChainSimulation {
     
+    //TODO: multithreaded actions
+    
     private CryptUtil crypto_utility = null;
     
     final private String ORIGIN_HASH = "000000000000000000000000000000000000000000000000000000000000000";
@@ -39,6 +41,8 @@ public class VICKChainSimulation {
         
     }
     
+    
+    
     public LinkedList<String> getSyntheticData(){
         
         return synthPatientRecords.getSynthData();
@@ -50,11 +54,15 @@ public class VICKChainSimulation {
     
     private void addNewBlock (LinkedList<ImmunizationExchange> values){
         
-        Block block = new Block(0, null, values);
+        
+        String last_hash = vick_chain.getLastBlock().getCurrentHashData();
+        
+        Block block = new Block(0, last_hash, values);
         
         //mineblock
+        Block minedBlock = vick_chain.mineBlock(block);
         
-        vick_chain.insertBlock(block);
+        vick_chain.insertBlock(minedBlock);
         
     }
 
@@ -71,11 +79,7 @@ public class VICKChainSimulation {
         return exchange_record;
     }
     
-    //validate chain
-    
-    //validate block
-    
-    //genesis block
+
     
     public static void main(String[] args) {
         

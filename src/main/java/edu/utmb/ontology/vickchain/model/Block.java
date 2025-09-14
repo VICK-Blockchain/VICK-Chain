@@ -15,6 +15,8 @@ import java.util.LinkedList;
  */
 public class Block {
     
+    //final private String ORIGIN_HASH = "000000000000000000000000000000000000000000000000000000000000000";
+    
     private int nonce;
     
     private String datetime;
@@ -40,6 +42,8 @@ public class Block {
         this.hash = calculateHash();
         
     }
+    
+    
     
     public void addImmunizationRecord(ImmunizationExchange immunization_exchange){
         
@@ -77,6 +81,10 @@ public class Block {
     
     public String getPreviousHashData(){
         return this.previous_hash;
+    }
+    
+    public String getCurrentHashData(){
+        return this.hash;
     }
     
     private String generateDateTime(){

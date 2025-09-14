@@ -13,6 +13,7 @@ import java.util.LinkedList;
  */
 public class VICKChain {
     
+    final private String ORIGIN_HASH = "000000000000000000000000000000000000000000000000000000000000000";
     
     int difficulty_value = 5;
     
@@ -24,11 +25,22 @@ public class VICKChain {
     
     public void insertBlock(Block block){
         
-        VICK_Chain.add(mineBlock(block));
+        VICK_Chain.add(block);
+    }
+    public Block getLastBlock(){
+        
+        if(VICK_Chain.size() ==0) return null;
+        
+        return VICK_Chain.getLast();
     }
     
+    public String getLastBockHash(){
+        if(VICK_Chain.size() ==0) return ORIGIN_HASH;
+        
+        return VICK_Chain.getLast().getCurrentHashData();
+    }
     
-    private Block mineBlock(Block block){
+    public Block mineBlock(Block block){
         
         System.out.println("mining...");
        
@@ -46,6 +58,20 @@ public class VICKChain {
         
         
         return block;
+        
+    }
+    
+    //TODO: Validate Chain
+    private void validateChain(){
+        
+        if(VICK_Chain.size() == 1) return;
+        
+        String target_hash = "00000";
+        
+        for(Block b : VICK_Chain){
+            
+        }
+        
         
     }
     
