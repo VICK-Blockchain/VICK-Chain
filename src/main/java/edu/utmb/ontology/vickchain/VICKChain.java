@@ -62,7 +62,7 @@ public class VICKChain {
     }
     
     //TODO: Validate Chain
-    private void validateChain(){
+    private void validateVICK_Chain(){
         
         if(VICK_Chain.size() == 1) return;
         
@@ -73,6 +73,52 @@ public class VICKChain {
         }
         
         
+    }
+    
+    
+    private boolean isVICK_BlockValid(Block currentBlock, Block previousBlock){
+        
+        if(previousBlock == null) //origin block
+        {
+            
+            //conditions: 1) origin block must have property of previous hash of null; 2) origin block must have a property of current block have a value
+            // 3) caluclated hash is the same
+            
+            if(currentBlock.getPreviousHashData() != null){
+                return false;
+            }
+            
+            if(currentBlock.getCurrentHashData() == null){
+                return false;
+            }
+            
+            if(!currentBlock.calculateHash().equals(currentBlock.getCurrentHashData())){
+                return false;
+            }
+            
+            return true;
+            
+            
+        }
+        else if (currentBlock != null)
+        {
+            //conditions: 1) current block has a previous hash data 2) current block's previous hash data is equal to previous block's hash data
+            // 3) current block has its own hash data 4) current block's caluclate hash is the same as current hash.
+            
+            if(currentBlock.getPreviousHashData() == null) return false;
+            
+            if(!currentBlock.getPreviousHashData().equals(previousBlock.getCurrentHashData())) return false;
+            
+            if(currentBlock.getCurrentHashData() == null) return false;
+            
+            if(!currentBlock.calculateHash().equals(currentBlock.getCurrentHashData())) return false;
+            
+            return true;
+            
+        }
+        
+        
+        return false; //default false (something must be wrong)
     }
     
     public static void main(String[] args) {

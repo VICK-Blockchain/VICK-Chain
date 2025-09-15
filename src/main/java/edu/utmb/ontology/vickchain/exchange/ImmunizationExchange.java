@@ -5,11 +5,8 @@
 package edu.utmb.ontology.vickchain.exchange;
 
 import edu.utmb.ontology.vickchain.util.CryptUtil;
-import java.security.KeyPair;
 import java.security.PrivateKey;
 import java.security.PublicKey;
-import java.util.LinkedList;
-import java.util.UUID;
 
 /**
  *
@@ -51,6 +48,8 @@ public class ImmunizationExchange {
    public void signRecord(PrivateKey privateKey){
        this.signature = CryptUtil.getInstance().signImmunizationRecordData(privateKey, this.getData());
    }
+   
+   //TODO:Signature Verification
    
    /*
     private PrivateKey privateKey;

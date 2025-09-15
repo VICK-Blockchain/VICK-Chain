@@ -7,7 +7,7 @@ package edu.utmb.ontology.vickchain.exchange;
 import java.security.PublicKey;
 
 /**
- * TODO: move contents to Immuinzation Exchange
+ * PENDING: Delete file
  * @author mac
  */
 public class ImmunizationRecord {
