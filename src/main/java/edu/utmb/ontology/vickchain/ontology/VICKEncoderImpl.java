@@ -8,6 +8,7 @@ import edu.utmb.ontology.vickchain.iri.ReferenceIRI;
 import edu.utmb.ontology.vickchain.iri.ReferenceIRIProperty;
 import static edu.utmb.ontology.vickchain.ontology.VICKManager.NAME_SPACE;
 import edu.utmb.ontology.vickchain.util.IDCounter;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -15,6 +16,8 @@ import java.util.logging.Logger;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.riot.Lang;
+import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.vocabulary.RDF;
 import org.apache.jena.vocabulary.RDFS;
 
@@ -87,6 +90,11 @@ public abstract class VICKEncoderImpl implements VICKEncoder {
         patient.addProperty(denoted_by, family_name);
         
         
+    }
+
+    @Override
+    public void saveData(FileOutputStream fos, Model model, Lang langformat) {
+        RDFDataMgr.write(fos, model, langformat);
     }
 
 }

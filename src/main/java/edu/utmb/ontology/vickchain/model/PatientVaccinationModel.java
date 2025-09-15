@@ -51,7 +51,8 @@ public class PatientVaccinationModel {
     private String vaccine_route;
     
     public PatientVaccinationModel(){
-        
+        clinic = new Clinic();
+        vax_admin = new Vaccine_Administrator();
     }
     
     public void initResourceModel(Model model) {
