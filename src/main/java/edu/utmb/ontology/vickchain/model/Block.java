@@ -6,6 +6,7 @@ package edu.utmb.ontology.vickchain.model;
 
 import edu.utmb.ontology.vickchain.exchange.ImmunizationExchange;
 import edu.utmb.ontology.vickchain.util.CryptUtil;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.LinkedList;
 
@@ -13,7 +14,7 @@ import java.util.LinkedList;
  *
  * @author mac
  */
-public class Block {
+public class Block implements Serializable{
     
     //final private String ORIGIN_HASH = "000000000000000000000000000000000000000000000000000000000000000";
     

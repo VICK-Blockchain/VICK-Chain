@@ -5,6 +5,7 @@
 package edu.utmb.ontology.vickchain.exchange;
 
 import edu.utmb.ontology.vickchain.util.CryptUtil;
+import java.io.Serializable;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 
@@ -12,7 +13,7 @@ import java.security.PublicKey;
  *
  * @author tuan
  */
-public class ImmunizationExchange {
+public class ImmunizationExchange implements Serializable {
    
    private String exchange_id; 
     

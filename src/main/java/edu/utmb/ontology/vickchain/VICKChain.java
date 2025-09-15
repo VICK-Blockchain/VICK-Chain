@@ -34,6 +34,16 @@ public class VICKChain {
         return VICK_Chain.getLast();
     }
     
+    public Block getFirstBlock(){
+        return VICK_Chain.getFirst();
+    }
+    
+    public LinkedList<Block> getVICKChain(){
+        
+        return this.VICK_Chain;
+        
+    }
+    
     public String getLastBockHash(){
         if(VICK_Chain.size() ==0) return ORIGIN_HASH;
         
@@ -61,22 +71,38 @@ public class VICKChain {
         
     }
     
-    //TODO: Validate Chain
-    private void validateVICK_Chain(){
+    //XXX: Validate Chain
+    private boolean validateVICK_Chain(VICKChain vickchain){
         
-        if(VICK_Chain.size() == 1) return;
+        if(!isVICK_BlockValid(vickchain.getFirstBlock(),null)){
+            return false;
+        }
         
-        String target_hash = "00000";
+        /*
+        for(Block block : vickchain.getVICKChain()){
+            
+        }
+        */
         
-        for(Block b : VICK_Chain){
+        for(int b = 1; b < vickchain.getVICKChain().size(); b++){
+            
+            Block current = vickchain.getVICKChain().get(b);
+            Block previous = vickchain.getVICKChain().get(b-1);
+            
+            if(!isVICK_BlockValid(current, previous)){
+                return false;
+            }
             
         }
         
-        
+        return true;
     }
     
     
     private boolean isVICK_BlockValid(Block currentBlock, Block previousBlock){
+        //String target_hash = "00000";
+        
+        //PENDING: Consider checking if the hash has been mined
         
         if(previousBlock == null) //origin block
         {
