@@ -19,7 +19,7 @@ public class VICKManagerSynth extends VICKEncoderImpl{
     
     public static final String VICK_NAME_SPACE = "http://purl.org/vick/vick.owl#";
     
-    private final String path_file = "/Users/mac/Desktop/SyntheticData+ID.xlsx";
+    private final String path_file = "/Users/mac/Library/CloudStorage/OneDrive-UTHealthHouston/SyntheticData+ID.xlsx";
     
     private Model model = null;
 
