@@ -20,7 +20,7 @@ public class VICKChainSimulation {
     
     private CryptUtil crypto_utility = null;
     
-    final private String ORIGIN_HASH = "000000000000000000000000000000000000000000000000000000000000000";
+    
     
     private VICKManagerSynth synthPatientRecords = null;
     
