@@ -20,7 +20,7 @@ public class VICKChainSimulation {
     
     private CryptUtil crypto_utility = null;
     
-    
+    int block_count = 0;
     
     private VICKManagerSynth synthPatientRecords = null;
     
@@ -29,6 +29,8 @@ public class VICKChainSimulation {
     private LinkedList<ImmunizationExchange> records = null;
     
     public VICKChainSimulation(){
+        
+        block_count++;
         
         vick_chain = new VICKChain();
         
@@ -54,8 +56,14 @@ public class VICKChainSimulation {
     
     private void addNewBlock (LinkedList<ImmunizationExchange> values){
         
+        String last_hash;
+        if(vick_chain.getLastBlock() == null){
+            last_hash = vick_chain.getORIGIN_HASH();
+        }
+        else{
+            last_hash = vick_chain.getLastBlock().getCurrentHashData();
+        }
         
-        String last_hash = vick_chain.getLastBlock().getCurrentHashData();
         
         Block block = new Block(0, last_hash, values);
         
@@ -68,7 +76,8 @@ public class VICKChainSimulation {
 
     public ImmunizationExchange transmitImmunizationRecord(Agent sender, Agent receiver, String record){
         
-        ImmunizationExchange exchange_record = new ImmunizationExchange(sender.getPublicKey(), receiver.getPublicKey(), record);
+        ImmunizationExchange exchange_record = new ImmunizationExchange(sender.getPublicKey(),
+                receiver.getPublicKey(), record);
         
         exchange_record.signRecord(sender.getPrivateKey());
         

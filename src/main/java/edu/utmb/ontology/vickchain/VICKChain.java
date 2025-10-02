@@ -23,6 +23,10 @@ public class VICKChain {
         VICK_Chain = new LinkedList<Block>();
     }
     
+    public String getORIGIN_HASH(){
+        return this.ORIGIN_HASH;
+    }
+    
     public void insertBlock(Block block){
         
         VICK_Chain.add(block);

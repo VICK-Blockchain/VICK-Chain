@@ -90,6 +90,7 @@ public class CryptUtil {
         return INSTANCE;
     }
     
+    /*
     public String hashTransform(LinkedList<ImmunizationExchange> documents){
         String input_data ="";
         
@@ -101,7 +102,7 @@ public class CryptUtil {
         
         return convertSHA256(input);
     }
-    
+    */
     public String convertSHA256(String information){
         
         StringBuffer hex_result = new StringBuffer();
