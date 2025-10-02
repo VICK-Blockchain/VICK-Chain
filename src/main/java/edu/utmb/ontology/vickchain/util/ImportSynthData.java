@@ -373,11 +373,13 @@ public class ImportSynthData {
     
     public static void main(String[] args) {
         
+        String file_sample = "/Users/mac/Library/CloudStorage/OneDrive-UTHealthHouston/SyntheticData+ID.xlsx";
+        
         //int length = ImportSynthData.getInstance().getMaxLenthSpreadsheet("/Users/mac/Desktop/SyntheticData+ID.xlsx");
         //System.out.println(length);
         ImportSynthData instance = ImportSynthData.getInstance();
         
-        instance.readExcelSpreadSheet("/Users/mac/Desktop/SyntheticData+ID.xlsx");
+        instance.readExcelSpreadSheet(file_sample);
         
         
         
