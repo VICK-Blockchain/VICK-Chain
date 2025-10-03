@@ -104,7 +104,7 @@ public class PatientVaccinationModel {
             vaccine_administrator_node = model.getResource(VICK_NAME_SPACE + "#" + id);
         }
         
-        vaccine_administrator_node.addProperty(RDF.type, ReferenceIRIVaccination.VaccineAdministrator.PHYSICIAN);
+        vaccine_administrator_node.addProperty(RDF.type, model.getResource(ReferenceIRIVaccination.VaccineAdministrator.PHYSICIAN));
         vaccine_administrator_node.addProperty(RDFS.label, name);
         
         //TODO add property link
