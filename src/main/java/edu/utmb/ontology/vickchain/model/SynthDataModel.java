@@ -45,6 +45,11 @@ public class SynthDataModel extends AbstractDataModel{
         
     }
     
+    public PatientVaccinationModel getPatientVaccinationModel(){
+        
+        return this.patient_vaccination;
+        
+    }
    
     /*
     public void initModel(Model import_model){

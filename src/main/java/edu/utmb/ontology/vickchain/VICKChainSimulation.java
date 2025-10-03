@@ -45,9 +45,9 @@ public class VICKChainSimulation {
     
     
     
-    public LinkedList<String> getSyntheticData(){
+    public LinkedList<String> getSyntheticDataNT(){
         
-        return synthPatientRecords.getSynthData();
+        return synthPatientRecords.getSynthDataNT();
     }
 
     public LinkedList<ImmunizationExchange> getRecords() {
@@ -92,14 +92,19 @@ public class VICKChainSimulation {
     
     public static void main(String[] args) {
         
-        Agent agent1 = new Agent();
-        Agent agent2 = new Agent();
+        Agent agent1 = new PatientAgent();
+        Agent agent2 = new PatientAgent();
         
         VICKChainSimulation sim = new VICKChainSimulation();
         
-        LinkedList<String> patient_data = sim.getSyntheticData();
+        LinkedList<String> patient_data = sim.getSyntheticDataNT();
         
-        sim.transmitImmunizationRecord(agent1, agent2, patient_data.get(7));
+        //Create Agents
+        
+        
+        
+        
+        //sim.transmitImmunizationRecord(agent1, agent2, patient_data.get(7));
         
         
         

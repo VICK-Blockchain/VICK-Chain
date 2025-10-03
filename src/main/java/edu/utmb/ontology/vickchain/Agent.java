@@ -13,7 +13,7 @@ import java.security.PublicKey;
  *
  * @author mac
  */
-public class Agent {
+public abstract class Agent {
     
     private PrivateKey private_key;
     private PublicKey public_key;

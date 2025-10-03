@@ -28,8 +28,8 @@ public class ReferenceIRIVaccination {
     }
     
     static public class VaccineAdministrator{
-        public static final String PROVIDER = "http://purl.org/vick/vick.owl#Provider";
-        public static final String PHYSICIAN = "http://purl.org/vick/vick.owl#Physician";
+        public static final String PROVIDER = "http://purl.org/vick/vick.owl#VICK_0000222";
+        public static final String PHYSICIAN = "http://purl.org/vick/vick.owl#VICK_0000224";
     }
     
     static public class Organization{

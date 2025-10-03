@@ -4,6 +4,7 @@
  */
 package edu.utmb.ontology.vickchain.ontology;
 
+import edu.utmb.ontology.vickchain.model.PatientVaccinationModel;
 import edu.utmb.ontology.vickchain.model.SynthDataModel;
 import edu.utmb.ontology.vickchain.util.ImportSynthData;
 import java.io.ByteArrayOutputStream;
@@ -14,8 +15,12 @@ import java.util.LinkedList;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.commons.io.IOUtils;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.Statement;
+import org.apache.jena.rdf.model.StmtIterator;
 import org.apache.jena.riot.Lang;
 import org.apache.jena.riot.RDFDataMgr;
 
@@ -32,7 +37,7 @@ public class VICKManagerSynth extends VICKEncoderImpl{
     private Model model = null;
     
     private LinkedList<String> vick_synth_data = null;
-
+    private Set<SynthDataModel> synthData = null;
     
     private VICKManagerSynth() {
        
@@ -40,7 +45,11 @@ public class VICKManagerSynth extends VICKEncoderImpl{
         
     }
     
-    public LinkedList<String> getSynthData(){
+    public Set<SynthDataModel> getSynthData(){
+        return this.synthData;
+    }
+    
+    public LinkedList<String> getSynthDataNT(){
         return vick_synth_data;
     }
     
@@ -59,7 +68,7 @@ public class VICKManagerSynth extends VICKEncoderImpl{
         
         ImportSynthData instance = ImportSynthData.getInstance();
         instance.readExcelSpreadSheet(path_file);
-        Set<SynthDataModel> synthData = instance.getSynthData();
+        synthData = instance.getSynthData();
         
         
         System.out.println(synthData.size());
@@ -82,10 +91,32 @@ public class VICKManagerSynth extends VICKEncoderImpl{
         
     }
     
+    public void parseIndividualNTData(){
+        Model parse_model = ModelFactory.createDefaultModel();
+        
+        for(String nt: vick_synth_data){
+            //parse_model.read(IOUtils.toInputStream(nt, "UTF-8"), null, "N-TRIPLES");
+            
+            //StmtIterator listStatements = parse_model.listStatements();
+            
+            System.out.println(nt + "\n========================================");
+            
+            //parse_model.close();
+        }
+        
+        
+        //parse_model.read(IOUtils.toInputStream(path_file, charset))
+        //model.read(IOUtils.)
+    }
+    
     public static void main(String[] args) {
         
         VICKManagerSynth v = VICKManagerSynth.getInstance();
         
         v.createNTExport();
+        
+        v.parseIndividualNTData();
+        
+       
     }
 }

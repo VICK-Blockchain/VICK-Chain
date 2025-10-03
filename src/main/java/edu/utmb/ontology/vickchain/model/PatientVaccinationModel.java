@@ -21,7 +21,7 @@ import org.apache.jena.vocabulary.RDFS;
  */
 public class PatientVaccinationModel {
     
-    private Model resource_model; //Apache Jena
+    private Model resource_model =null; //Apache Jena
     
     private Resource vaccine_node = null;
     private Resource vaccine_manufacturer_node = null;
@@ -66,12 +66,22 @@ public class PatientVaccinationModel {
         initClinicResource(model);
     }
     
+    public Model getResourceModel(){
+        return this.resource_model;
+    }
+    
     private void initClinicResource(Model model){
         
         String id = clinic.id;
         String name = clinic.name;
         
-        clinic_node = model.getResource(VICK_NAME_SPACE + "#" + id);
+        if(id.contains(VICK_NAME_SPACE)){
+            clinic_node = model.getResource(id);
+        }
+        else{
+            clinic_node = model.getResource(VICK_NAME_SPACE + "#" + id);
+        }
+        
         clinic_node.addProperty(RDF.type, ReferenceIRIVaccination.Organization.ORGANIZATION);
         clinic_node.addProperty(RDFS.label, name);
         
@@ -87,11 +97,23 @@ public class PatientVaccinationModel {
         String id = vax_admin.id;
         String name = vax_admin.name;
         
-        vaccine_administrator_node = model.getResource(VICK_NAME_SPACE + "#" + id);
+        if(id.contains(VICK_NAME_SPACE)){
+            vaccine_administrator_node = model.getResource(id);
+        }
+        else{
+            vaccine_administrator_node = model.getResource(VICK_NAME_SPACE + "#" + id);
+        }
+        
         vaccine_administrator_node.addProperty(RDF.type, ReferenceIRIVaccination.VaccineAdministrator.PHYSICIAN);
         vaccine_administrator_node.addProperty(RDFS.label, name);
         
         //TODO add property link
+    }
+    
+    public Resource getVaccineAdministratorNode(){
+        
+        return this.vaccine_administrator_node;
+        
     }
     
     private void initVaccineResource(Model model){

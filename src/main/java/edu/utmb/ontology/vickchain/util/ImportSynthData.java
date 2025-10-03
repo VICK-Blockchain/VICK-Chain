@@ -9,6 +9,7 @@ import edu.utmb.ontology.vickchain.model.PatientModel.PatientEthnicity;
 import edu.utmb.ontology.vickchain.model.PatientModel.PatientGender;
 import edu.utmb.ontology.vickchain.model.PatientModel.PatientLanguage;
 import edu.utmb.ontology.vickchain.model.PatientModel.PatientRace;
+import edu.utmb.ontology.vickchain.model.PatientVaccinationModel;
 import edu.utmb.ontology.vickchain.model.SynthDataModel;
 import static edu.utmb.ontology.vickchain.ontology.VICKManager.NAME_SPACE;
 import static edu.utmb.ontology.vickchain.ontology.VICKManagerSynth.VICK_NAME_SPACE;
@@ -24,6 +25,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.jena.rdf.model.Resource;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
@@ -53,6 +55,28 @@ public class ImportSynthData {
     private static class ImportSynthDataHolder {
 
         private static final ImportSynthData INSTANCE = new ImportSynthData();
+    }
+    
+    public void getAllVaccineAdministratorResources(){
+        
+        System.out.println(synth_data.size());
+        
+        for(SynthDataModel sm: synth_data){
+            
+            PatientVaccinationModel patientVaccinationModel = sm.getPatientVaccinationModel();
+            
+            if(patientVaccinationModel != null){
+                //System.out.println("it is null");
+                Resource admin_node = patientVaccinationModel.getVaccineAdministratorNode();
+                
+                System.out.println(admin_node.toString());
+                
+            }
+            
+            //System.out.println(patientVaccinationModel.getVaccine_administrator_node().toString());
+            
+        }
+        
     }
     
     
@@ -104,7 +128,7 @@ public class ImportSynthData {
         SynthDataModel data_model = new SynthDataModel();
         
         for(Cell cell : row){
-            //System.out.println(row.getRowNum());
+            
             if(cell !=null ||cell.getCellType() != CellType.BLANK){
                 
                 
@@ -381,6 +405,7 @@ public class ImportSynthData {
         
         instance.readExcelSpreadSheet(file_sample);
         
+        //instance.getAllVaccineAdministratorResources();
         
         
     }
