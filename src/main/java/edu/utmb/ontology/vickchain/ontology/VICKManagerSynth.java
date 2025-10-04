@@ -4,32 +4,27 @@
  */
 package edu.utmb.ontology.vickchain.ontology;
 
-import edu.utmb.ontology.vickchain.model.PatientVaccinationModel;
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
 import edu.utmb.ontology.vickchain.model.SynthDataModel;
 import edu.utmb.ontology.vickchain.util.ImportSynthData;
 import java.io.ByteArrayOutputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.LinkedList;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.apache.commons.io.IOUtils;
+import org.apache.jena.iri.IRI;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryExecutionFactory;
 import org.apache.jena.query.QueryFactory;
 import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
+import org.apache.jena.rdf.model.Literal;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.Resource;
-import org.apache.jena.rdf.model.Statement;
-import org.apache.jena.rdf.model.StmtIterator;
-import org.apache.jena.riot.Lang;
-import org.apache.jena.riot.RDFDataMgr;
 
 /**
  *
@@ -47,10 +42,22 @@ public class VICKManagerSynth extends VICKEncoderImpl{
     private LinkedList<String> vick_synth_data = null;
     private Set<SynthDataModel> synthData = null;
     
+    private Multimap<String, String> patients = null;
+    
+    private Multimap<String, String> providers = null;
+    
     private VICKManagerSynth() {
        
         model = ModelFactory.createDefaultModel();
         
+    }
+    
+    public Multimap<String, String> getProviders(){
+        return this.providers;
+    }
+    
+    public Multimap<String, String> getPatients(){
+        return this.patients;
     }
     
     public Set<SynthDataModel> getSynthData(){
@@ -103,52 +110,94 @@ public class VICKManagerSynth extends VICKEncoderImpl{
        
         
         for(String nt: vick_synth_data){
-            //parse_model.read(IOUtils.toInputStream(nt, "UTF-8"), null, "N-TRIPLES");
             
-            //StmtIterator listStatements = parse_model.listStatements();
+            //System.out.println(nt);
+           
+            providers = extractProviderResource(nt);
             
-            //System.out.println(nt + "\n========================================");
-            extractProviderResource(nt);
-            //parse_model.close();
+            patients = extractPatientResource(nt);
+            
         }
-        
-        
-        //parse_model.read(IOUtils.toInputStream(path_file, charset))
-        //model.read(IOUtils.)
+
     }
     
-    private void extractProviderResource( String nt){
-        
-        String query = "SELECT ?subject ?predicate ?object\n" +
-"WHERE {\n" +
-"?subject ?predicate ?object\n" +
-"}";
-        
-        
-         Model parse_model = ModelFactory.createDefaultModel();
-         
-         parse_model.read(IOUtils.toInputStream(nt, "UTF-8"), null, "N-TRIPLES");
-         
-         Query _query = QueryFactory.create(query);
-         
+    private Multimap<String, String> extractProviderResource(String nt) {
+
+        Multimap<String, String> provider_collection = ArrayListMultimap.create();
+
+        String query
+                = "PREFIX rdfs:  <http://www.w3.org/2000/01/rdf-schema#>\n"
+                + "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n"
+                + "PREFIX obo: <http://purl.obolibrary.org/obo/>\n"
+                + "SELECT ?subject ?label \n"
+                + "WHERE {\n"
+                + "?subject rdf:type <http://purl.org/vick/vick.owl#VICK_0000224>  . \n "
+                + "?subject rdfs:label ?label . \n"
+                + "}";
+
+        Model parse_model = ModelFactory.createDefaultModel();
+
+        parse_model.read(IOUtils.toInputStream(nt, "UTF-8"), null, "N-TRIPLES");
+
+        Query _query = QueryFactory.create(query);
+
         QueryExecution qe = QueryExecutionFactory.create(_query, parse_model);
-        
+
         ResultSet rs = qe.execSelect();
-        
-        while(rs.hasNext()){
-            
+
+        while (rs.hasNext()) {
+
             QuerySolution qs = rs.nextSolution();
-            
-            RDFNode node = qs.get("subject");
-            
-            
-            
-            System.out.println(node.toString());
-            
+
+            Resource subject = qs.getResource("subject");
+            Literal label = qs.getLiteral("label");
+
+            provider_collection.put(subject.getURI(), label.getString());
+
         }
-         qe.close();
+        qe.close();
+
+        return provider_collection;
     }
-    
+
+    private Multimap<String, String> extractPatientResource(String nt) {
+
+        Multimap<String, String> patient_collection = ArrayListMultimap.create();
+
+        String query
+                = "PREFIX rdfs:  <http://www.w3.org/2000/01/rdf-schema#>\n"
+                + "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n"
+                + "PREFIX obo: <http://purl.obolibrary.org/obo/>\n"
+                + "SELECT ?subject ?label \n"
+                + "WHERE {\n"
+                + "?subject rdf:type <http://purl.obolibrary.org/obo/VICO_0000016>  . \n "
+                + "?subject rdfs:label ?label . \n"
+                + "}";
+
+        Model parse_model = ModelFactory.createDefaultModel();
+
+        parse_model.read(IOUtils.toInputStream(nt, "UTF-8"), null, "N-TRIPLES");
+
+        Query _query = QueryFactory.create(query);
+
+        QueryExecution qe = QueryExecutionFactory.create(_query, parse_model);
+
+        ResultSet rs = qe.execSelect();
+
+        while (rs.hasNext()) {
+
+            QuerySolution qs = rs.nextSolution();
+
+            Resource subject = qs.getResource("subject");
+            Literal label = qs.getLiteral("label");
+
+            patient_collection.put(subject.getURI(), label.getString());
+
+        }
+
+        return patient_collection;
+    }
+
     public static void main(String[] args) {
         
         VICKManagerSynth v = VICKManagerSynth.getInstance();

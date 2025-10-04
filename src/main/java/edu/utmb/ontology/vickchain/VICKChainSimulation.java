@@ -4,11 +4,13 @@
  */
 package edu.utmb.ontology.vickchain;
 
+import com.google.common.collect.Multimap;
 import edu.utmb.ontology.vickchain.exchange.ImmunizationExchange;
 import edu.utmb.ontology.vickchain.model.Block;
 import edu.utmb.ontology.vickchain.ontology.VICKManagerSynth;
 import edu.utmb.ontology.vickchain.util.CryptUtil;
 import java.util.LinkedList;
+import java.util.Map;
 
 /**
  *
@@ -43,7 +45,15 @@ public class VICKChainSimulation {
         
     }
     
+    public Multimap<String, String> getSimulatedPatients(){
+        
+        return synthPatientRecords.getPatients();
+    }
     
+    public Multimap<String, String> getSimulatedProviders(){
+        
+        return synthPatientRecords.getProviders();
+    }
     
     public LinkedList<String> getSyntheticDataNT(){
         
@@ -100,10 +110,33 @@ public class VICKChainSimulation {
         LinkedList<String> patient_data = sim.getSyntheticDataNT();
         
         //Create Agents
+        Multimap<String, String> simulatedPatients = sim.getSimulatedPatients();
+        LinkedList<PatientAgent> patients = new LinkedList<PatientAgent>();
+        
+        for(Map.Entry<String, String> patient : simulatedPatients.entries()){
+            
+            PatientAgent patient_agent = new PatientAgent();
+            
+            //add data to patient agent
+            
+            patients.add(patient_agent);
+            
+        }
         
         
+        Multimap<String, String> simulatedProviders = sim.getSimulatedProviders();
+        LinkedList<ProviderAgent> providers = new LinkedList<ProviderAgent>();
+        
+        for(Map.Entry<String, String> provider : simulatedProviders.entries()){
+            ProviderAgent provider_agent = new ProviderAgent();
+            
+            //add data to provider agent
+            
+            providers.add(provider_agent);
+        }
         
         
+        //TODO: looop through NT records 
         //sim.transmitImmunizationRecord(agent1, agent2, patient_data.get(7));
         
         

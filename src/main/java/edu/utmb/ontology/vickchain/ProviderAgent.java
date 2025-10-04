@@ -25,6 +25,10 @@ public class ProviderAgent extends Agent {
         this.vaccine_administrator = vaccine_administrator_node;
     }
     
+    public ProviderAgent(){
+        
+    }
+    
     @Override
     public String toString(){
         
