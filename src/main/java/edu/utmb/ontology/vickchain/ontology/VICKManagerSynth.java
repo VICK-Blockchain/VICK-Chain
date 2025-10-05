@@ -114,7 +114,7 @@ public class VICKManagerSynth extends VICKEncoderImpl{
         
         for(String nt: vick_synth_data){
             
-            //System.out.println(nt);
+           //System.out.println(nt);
            providers.putAll(extractProviderResource(nt));
             //providers = extractProviderResource(nt);
            patients.putAll(extractPatientResource(nt));

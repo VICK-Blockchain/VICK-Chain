@@ -16,6 +16,12 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.BiConsumer;
 import org.apache.commons.io.IOUtils;
+import org.apache.jena.query.Query;
+import org.apache.jena.query.QueryExecution;
+import org.apache.jena.query.QueryExecutionFactory;
+import org.apache.jena.query.QueryFactory;
+import org.apache.jena.query.QuerySolution;
+import org.apache.jena.query.ResultSet;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 
@@ -110,8 +116,9 @@ public class VICKChainSimulation {
         return exchange_record;
     }
     
-
-    public boolean delegateToTheseAgents(ProviderAgent provider, PatientAgent patient){
+    public boolean delegateToTheseAgents(String nt, ProviderAgent provider, PatientAgent patient){
+        
+        boolean result;
         
         String provider_id = provider.getIdentifier();
         String patient_id = patient.getIdentifier();
@@ -122,23 +129,26 @@ public class VICKChainSimulation {
                 + "PREFIX obo: <http://purl.obolibrary.org/obo/>\n"
                 + "ASK \n"
                 + "{\n"
-                + "<[provider]> rdf:type <http://purl.obolibrary.org/obo/VICO_0000016>  . \n "
-                + "<[patient]> rdf:type ?label . \n"
+                + "<[provider]> rdf:type <http://purl.org/vick/vick.owl#VICK_0000224>  . \n "
+                + "<[patient]> rdf:type <http://purl.obolibrary.org/obo/VICO_0000016>  . \n"
                 + "}";
         
         
-        string_query = string_query.replaceAll("[provider]", provider_id);
-        string_query = string_query.replaceAll("[patient]", patient_id);
+        string_query = string_query.replaceAll("\\[provider\\]", provider_id);
+        string_query = string_query.replaceAll("\\[patient\\]", patient_id);
         
-        for(String nt :synthPatientRecords.getSynthDataNT()){
-            model.read(IOUtils.toInputStream(nt, "UTF-8"), null, "N-TRIPLES");
-        }
+        model.read(IOUtils.toInputStream(nt, "UTF-8"), null, "N-TRIPLES");
+        Query query = QueryFactory.create(string_query);
+        QueryExecution qe = QueryExecutionFactory.create(query, model);
+            
+        result = qe.execAsk();
+        qe.close();
         
-        
-        
-        return false;
-        //model.read(IOUtils.toInputStream(nt, "UTF-8"), null, "N-TRIPLES");
+        return result;
     }
+    
+
+ 
     
     public static void main(String[] args) {
         
@@ -187,19 +197,28 @@ public class VICKChainSimulation {
         }
         
         
-        for(ProviderAgent provider :  providers){
+        for(String patient_datum : patient_data){
+            for(ProviderAgent provider :  providers){
             
             for(PatientAgent patient : patients){
-                //System.out.println("Provider: "+ provider.getIdentifier());
-                //System.out.println("Patient: "+patient.getIdentifier());
                 
-                //sim.transmitImmunizationRecord(provider, patient, patient_data.get(7));
+                if(sim.delegateToTheseAgents(patient_datum, provider, patient)){
+                    //sim.transmitImmunizationRecord(patient, provider, patient_datum);
+                    
+                    System.out.println( patient.getLabels().get(0).toString() + " shared immunization data with " + provider.getLabels().get(0).toString());
+        
+                }
+                
             }
             
         }
         
+        }
         
-        //sim.transmitImmunizationRecord(agent1, agent2, patient_data.get(7));
+        
+        
+        
+        
         
         
         

@@ -56,7 +56,7 @@ public class VICKChain {
     
     public Block mineBlock(Block block){
         
-        System.out.println("mining...");
+        System.out.println("\nmining...\n");
        
         
         String target_challenge = new String(new char[difficulty_value]).replace('\0', '0');
@@ -65,7 +65,7 @@ public class VICKChain {
             //nonce++;
             block.incrementNonce();
             String calculateHash = block.calculateHash();
-            System.out.println(calculateHash);
+            //System.out.println(calculateHash);
             block.setHash(calculateHash);
             
         }
