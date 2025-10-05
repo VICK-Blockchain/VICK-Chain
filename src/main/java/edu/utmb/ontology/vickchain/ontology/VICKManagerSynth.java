@@ -104,18 +104,21 @@ public class VICKManagerSynth extends VICKEncoderImpl{
            
         }
         
+        
     }
     
     public void parseIndividualNTData(){
        
+        providers = ArrayListMultimap.create();
+        patients = ArrayListMultimap.create();
         
         for(String nt: vick_synth_data){
             
             //System.out.println(nt);
-           
-            providers = extractProviderResource(nt);
-            
-            patients = extractPatientResource(nt);
+           providers.putAll(extractProviderResource(nt));
+            //providers = extractProviderResource(nt);
+           patients.putAll(extractPatientResource(nt));
+            //patients = extractPatientResource(nt);
             
         }
 

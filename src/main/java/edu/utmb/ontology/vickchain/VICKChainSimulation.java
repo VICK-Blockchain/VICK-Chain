@@ -15,6 +15,9 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.BiConsumer;
+import org.apache.commons.io.IOUtils;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
 
 /**
  *
@@ -34,6 +37,8 @@ public class VICKChainSimulation {
         
     private LinkedList<ImmunizationExchange> records = null;
     
+    private Model model;
+    
     public VICKChainSimulation(){
         
         block_count++;
@@ -42,10 +47,13 @@ public class VICKChainSimulation {
         
         synthPatientRecords = VICKManagerSynth.getInstance();
         synthPatientRecords.createNTExport();
+        synthPatientRecords.parseIndividualNTData();
         
         crypto_utility = CryptUtil.getInstance();
         
         records = new LinkedList<ImmunizationExchange>();
+        
+        model = ModelFactory.createDefaultModel();
         
     }
     
@@ -103,6 +111,34 @@ public class VICKChainSimulation {
     }
     
 
+    public boolean delegateToTheseAgents(ProviderAgent provider, PatientAgent patient){
+        
+        String provider_id = provider.getIdentifier();
+        String patient_id = patient.getIdentifier();
+        
+        String string_query
+                = "PREFIX rdfs:  <http://www.w3.org/2000/01/rdf-schema#>\n"
+                + "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n"
+                + "PREFIX obo: <http://purl.obolibrary.org/obo/>\n"
+                + "ASK \n"
+                + "{\n"
+                + "<[provider]> rdf:type <http://purl.obolibrary.org/obo/VICO_0000016>  . \n "
+                + "<[patient]> rdf:type ?label . \n"
+                + "}";
+        
+        
+        string_query = string_query.replaceAll("[provider]", provider_id);
+        string_query = string_query.replaceAll("[patient]", patient_id);
+        
+        for(String nt :synthPatientRecords.getSynthDataNT()){
+            model.read(IOUtils.toInputStream(nt, "UTF-8"), null, "N-TRIPLES");
+        }
+        
+        
+        
+        return false;
+        //model.read(IOUtils.toInputStream(nt, "UTF-8"), null, "N-TRIPLES");
+    }
     
     public static void main(String[] args) {
         
@@ -151,9 +187,18 @@ public class VICKChainSimulation {
         }
         
         
+        for(ProviderAgent provider :  providers){
+            
+            for(PatientAgent patient : patients){
+                //System.out.println("Provider: "+ provider.getIdentifier());
+                //System.out.println("Patient: "+patient.getIdentifier());
+                
+                //sim.transmitImmunizationRecord(provider, patient, patient_data.get(7));
+            }
+            
+        }
         
         
-        //TODO: looop through NT records 
         //sim.transmitImmunizationRecord(agent1, agent2, patient_data.get(7));
         
         
