@@ -35,6 +35,17 @@ public abstract class Agent {
         public_key = key_pair.getPublic();
         
     }
+    
+    public boolean isIdentifierMatch(String id){
+        
+        if(id.trim().equalsIgnoreCase(identifier)){
+            return true;
+        }
+        else{
+            return false;
+        }
+        
+    }
 
     public String getIdentifier() {
         return identifier;
