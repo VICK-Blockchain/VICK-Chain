@@ -9,8 +9,12 @@ import edu.utmb.ontology.vickchain.exchange.ImmunizationExchange;
 import edu.utmb.ontology.vickchain.model.Block;
 import edu.utmb.ontology.vickchain.ontology.VICKManagerSynth;
 import edu.utmb.ontology.vickchain.util.CryptUtil;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Set;
+import java.util.function.BiConsumer;
 
 /**
  *
@@ -102,8 +106,12 @@ public class VICKChainSimulation {
     
     public static void main(String[] args) {
         
-        Agent agent1 = new PatientAgent();
-        Agent agent2 = new PatientAgent();
+        //Tester
+        //Agent agent1 = new PatientAgent();
+        //Agent agent2 = new PatientAgent();
+        // VICKChainSimulation sim = new VICKChainSimulation();
+        //sim.transmitImmunizationRecord(agent1, agent2, patient_data.get(7));
+        
         
         VICKChainSimulation sim = new VICKChainSimulation();
         
@@ -113,27 +121,36 @@ public class VICKChainSimulation {
         Multimap<String, String> simulatedPatients = sim.getSimulatedPatients();
         LinkedList<PatientAgent> patients = new LinkedList<PatientAgent>();
         
-        for(Map.Entry<String, String> patient : simulatedPatients.entries()){
+        for(var patient : simulatedPatients.asMap().entrySet()){
             
             PatientAgent patient_agent = new PatientAgent();
             
             //add data to patient agent
+            patient_agent.setIdentifier(patient.getKey());
+            
+            patient_agent.setLabels(new ArrayList<> (patient.getValue()));
             
             patients.add(patient_agent);
             
         }
-        
-        
+
         Multimap<String, String> simulatedProviders = sim.getSimulatedProviders();
         LinkedList<ProviderAgent> providers = new LinkedList<ProviderAgent>();
         
-        for(Map.Entry<String, String> provider : simulatedProviders.entries()){
+        for( var provider : simulatedProviders.asMap().entrySet()){
+            
             ProviderAgent provider_agent = new ProviderAgent();
             
             //add data to provider agent
+            provider_agent.setIdentifier(provider.getKey());
+            
+            provider_agent.setLabels(new ArrayList<> (provider.getValue()));
             
             providers.add(provider_agent);
+            
         }
+        
+        
         
         
         //TODO: looop through NT records 
