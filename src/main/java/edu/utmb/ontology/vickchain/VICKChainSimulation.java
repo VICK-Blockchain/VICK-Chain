@@ -226,7 +226,7 @@ public class VICKChainSimulation {
             
         }
 
-        
+        //TODO: execute a threaded version of this
         for(String patient_datum : patient_data){
             
             System.out.println(patient_datum);
