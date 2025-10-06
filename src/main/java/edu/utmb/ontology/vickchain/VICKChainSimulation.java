@@ -176,8 +176,11 @@ public class VICKChainSimulation {
             }
         }
         
+        
         System.out.println( "Patient " + patient.getLabels().get(0) +" shared their immunization info to Provider " + provider.getLabels().get(0) );
         this.transmitImmunizationRecord(patient, provider, nt);
+        
+        
     }
 
     
