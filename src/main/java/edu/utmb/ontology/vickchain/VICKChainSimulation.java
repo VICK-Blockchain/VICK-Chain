@@ -227,15 +227,19 @@ public class VICKChainSimulation {
         }
 
         //TODO: execute a threaded version of this
+        int count = patient_data.size();
+        System.out.println("\n\nNumber of datasets: " + count);
         for(String patient_datum : patient_data){
             
             System.out.println(patient_datum);
-            
+            System.out.println("\nRemaining datasets: " + count );
             sim.findRelatedAgents(patient_datum, providers, patients);
+            
+            count = count-1;
+            
             
             System.out.println("\n\n----------------------------\n\n");
             
-        
         }
 
     }

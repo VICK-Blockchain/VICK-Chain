@@ -15,7 +15,7 @@ public class VICKChain {
     
     final private String ORIGIN_HASH = "000000000000000000000000000000000000000000000000000000000000000";
     
-    int difficulty_value = 5;
+    int difficulty_value = 3;
     
     private LinkedList<Block> VICK_Chain;
     
@@ -70,7 +70,7 @@ public class VICKChain {
             
         }
         
-        
+        System.out.println(block.getCurrentHashData());
         return block;
         
     }
